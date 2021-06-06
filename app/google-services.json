@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "641463271898",
+    "project_id": "shoppingcompanionv3",
+    "storage_bucket": "shoppingcompanionv3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:641463271898:android:5f1469886fadc28c9500e3",
+        "android_client_info": {
+          "package_name": "com.example.shoppingcompanionv3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "641463271898-37hi4k9svmc190gekvngbb8q7cpuhkfr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyIjxzAw9zBJPdQ-T3LI1Kn4me4F1zEms"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "641463271898-37hi4k9svmc190gekvngbb8q7cpuhkfr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
