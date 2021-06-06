@@ -106,6 +106,7 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
         Intent i = new Intent(getApplicationContext(), ContentsActivity.class);
         i.putExtra("Value1", selectedItem.getImageUrl()); // Send through the URL for the image we want to display
         i.putExtra("Value2", selectedItem.getName()); // Send through the name for the image we want to display
+        i.putExtra("Value3", selectedItem.getKey());
 
         startActivity(i);
         // End of Open Folder

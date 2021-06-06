@@ -28,12 +28,13 @@ import java.util.List;
 public class ContentsActivity extends AppCompatActivity
 {
     FirebaseDatabase database = FirebaseDatabase.getInstance(); // FireBase Reference
-    DatabaseReference myRef = database.getReference("message");
+    //DatabaseReference myRef = database.getReference("message");
+    private DatabaseReference myRef;
 
     private ImageView mImageFolder;
     private TextView mTextFolder;
     EditText productName, qty; // For adding a new item -> the name and quantity
-    int i = 0;
+    int index = 0;
 
     Button push;
     String enteredProdName, enteredQtyAmount;
@@ -52,7 +53,10 @@ public class ContentsActivity extends AppCompatActivity
 
         String value1 = getIntent().getStringExtra("Value1"); // URL passed from ImageViewHolder
         String value2 = getIntent().getStringExtra("Value2"); // Name passed from ImageViewHolder
-        Toast.makeText(ContentsActivity.this,  "Name: " + value2 + "\nKey: " + value1, Toast.LENGTH_SHORT).show();
+        String value3 = getIntent().getStringExtra("Value3"); // Name passed from ImageViewHolder
+        Toast.makeText(ContentsActivity.this,  "Name: " + value2 + "\nKey: " + value3 + "\nLink: " + value1, Toast.LENGTH_SHORT).show();
+
+        myRef = FirebaseDatabase.getInstance().getReference("uploads");
 
         // Declarations
         mImageFolder = findViewById(R.id.image_view_contents);
@@ -71,6 +75,23 @@ public class ContentsActivity extends AppCompatActivity
         // ---------------------------------------------------------------------------------------------------------------------------------------//
         // For PUSH button
 
+        myRef.child(value3).child("contents").addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(DataSnapshot snapshot)
+            {
+                int i = 0;
+
+                for (DataSnapshot contentsFromFirebase : snapshot.getChildren())
+                {
+                    i++;
+                    index = i;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+
         push.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -80,8 +101,10 @@ public class ContentsActivity extends AppCompatActivity
                 enteredQtyAmount = qty.getText().toString().trim();
 
                 contents = new Contents(enteredProdName, enteredQtyAmount);
-                myRef.child(String.valueOf(i)).setValue(contents);
-                i++;
+                //myRef.child(String.valueOf(i)).setValue(contents); OLD
+
+                Toast.makeText(ContentsActivity.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
+                myRef.child(value3).child("contents").child(String.valueOf(index)).setValue(contents);
             }
         });
 
@@ -107,7 +130,7 @@ public class ContentsActivity extends AppCompatActivity
         // ---------------------------------------------------------------------------------------------------------------------------------------//
         // Fills list with contents for this folder
         // For finding and assigning content values. Check Contents.java class for more info
-        myRef.addValueEventListener(new ValueEventListener() {
+        myRef.child(value3).child("contents").addValueEventListener(new ValueEventListener() { // Was prev just myRef.addValue... etc
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 contents = new Contents();
