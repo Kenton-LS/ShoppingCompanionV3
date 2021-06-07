@@ -278,6 +278,7 @@ public class MainActivity extends AppCompatActivity
             final BufferedOutputStream bos = new BufferedOutputStream(out, 8192);
             finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bos);
             mImageUri = Uri.fromFile(file);
+            mImageUri = mImageUri.normalizeScheme();
             bos.flush();
             bos.close();
             Log.d(bos.toString(), " | File saved successfully!");
