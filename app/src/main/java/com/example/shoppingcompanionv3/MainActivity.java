@@ -164,13 +164,13 @@ public class MainActivity extends AppCompatActivity
             Picasso.get().load(mImageUri).into(mImageView); // For loading Image View
         }
 
-        if (resultCode != Activity.RESULT_OK && data != null) {
+        if (resultCode != Activity.RESULT_OK && data != null && data.getData() != null) {
             return;
         }
         if (requestCode == TAKE_IMAGE_REQUEST) {
 
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            imageViewThing.setImageBitmap(bitmap);
+            mImageView.setImageBitmap(bitmap);
             if (isStoragePermissionGranted()) {
                 SaveImage(bitmap);
             }
@@ -277,6 +277,7 @@ public class MainActivity extends AppCompatActivity
             final FileOutputStream out = new FileOutputStream(file);
             final BufferedOutputStream bos = new BufferedOutputStream(out, 8192);
             finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bos);
+            mImageUri = Uri.fromFile(file);
             bos.flush();
             bos.close();
             Log.d(bos.toString(), " | File saved successfully!");
