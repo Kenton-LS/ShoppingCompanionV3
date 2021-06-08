@@ -3,6 +3,7 @@ package com.example.shoppingcompanionv3;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -33,11 +34,9 @@ public class ContentsActivity extends AppCompatActivity
 
     private ImageView mImageFolder;
     private TextView mTextFolder;
-    EditText productName, qty; // For adding a new item -> the name and quantity
     int index = 0;
 
     Button push;
-    String enteredProdName, enteredQtyAmount;
 
     List<String> contentList; // For FireBase list of contents
     ArrayAdapter adapter;
@@ -63,17 +62,12 @@ public class ContentsActivity extends AppCompatActivity
         mTextFolder = findViewById(R.id.text_view_contents);
         contentsListView = findViewById(R.id.lv_contents);
 
-        productName = findViewById(R.id.et_productName);
-        qty = findViewById(R.id.et_qty);
         push = findViewById(R.id.btn_push);
 
         // Set image and text for folder header
         mTextFolder.setText(value2);
         Picasso.get().load(value1).placeholder(R.mipmap.ic_launcher) // Mipmap creates default placeholder image while real images load
                 .fit().centerCrop().into(mImageFolder);
-
-        // ---------------------------------------------------------------------------------------------------------------------------------------//
-        // For PUSH button
 
         myRef.child(value3).child("contents").addValueEventListener(new ValueEventListener()
         {
@@ -92,40 +86,22 @@ public class ContentsActivity extends AppCompatActivity
             public void onCancelled(DatabaseError databaseError) { }
         });
 
+        // ---------------------------------------------------------------------------------------------------------------------------------------//
+        // For PUSH button
+        // Open the AddItemActivity.java class
         push.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                enteredProdName = productName.getText().toString().trim();
-                enteredQtyAmount = qty.getText().toString().trim();
+                Intent i = new Intent(getApplicationContext(), AddItemActivity.class);
+                i.putExtra("Value1", value1); // Send through the URL for the image we want to display
+                i.putExtra("Value2", value2); // Send through the name for the image we want to display
+                i.putExtra("Value3", value3);
 
-                contents = new Contents(enteredProdName, enteredQtyAmount);
-                //myRef.child(String.valueOf(i)).setValue(contents); OLD
-
-                Toast.makeText(ContentsActivity.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
-                myRef.child(value3).child("contents").child(String.valueOf(index)).setValue(contents);
+                startActivity(i);
             }
         });
-
-        //The below is OPTIONAL SAFETY CHECKING
-        myRef.push().setValue(contents).addOnSuccessListener(new OnSuccessListener<Void>()
-        {
-            @Override
-            public void onSuccess(Void aVoid)
-            {
-                Toast.makeText(ContentsActivity.this, "Item Added Successfully", Toast.LENGTH_SHORT);
-            }
-        })
-                .addOnFailureListener(new OnFailureListener()
-                {
-                    @Override
-                    public void onFailure(@NonNull Exception e)
-                    {
-                        Toast.makeText(ContentsActivity.this, e.getMessage(), Toast.LENGTH_SHORT);
-                    }
-                });
-        //END OPTIONAL SAFETY CHECK
 
         // ---------------------------------------------------------------------------------------------------------------------------------------//
         // Fills list with contents for this folder
