@@ -50,8 +50,9 @@ public class AddItemActivity extends AppCompatActivity
         String value1 = getIntent().getStringExtra("Value1"); // URL passed from ImageViewHolder
         String value2 = getIntent().getStringExtra("Value2"); // Name passed from ImageViewHolder
         String value3 = getIntent().getStringExtra("Value3"); // Name passed from ImageViewHolder
+        String valueUID = getIntent().getStringExtra("ValueUID"); // User ID
 
-        myRef = FirebaseDatabase.getInstance().getReference("uploads");
+        myRef = FirebaseDatabase.getInstance().getReference(valueUID + "/uploads");
 
         // Declarations
         mImageFolder = findViewById(R.id.image_view_contents4);
@@ -116,6 +117,7 @@ public class AddItemActivity extends AppCompatActivity
                 i.putExtra("Value1", value1); // Send through the URL for the image we want to display
                 i.putExtra("Value2", value2); // Send through the name for the image we want to display
                 i.putExtra("Value3", value3);
+                i.putExtra("ValueUID", valueUID); // Return this user's ID
 
                 startActivity(i);
             }

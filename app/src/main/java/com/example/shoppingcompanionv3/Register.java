@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -38,11 +39,11 @@ public class Register extends AppCompatActivity
 
         fAuth = FirebaseAuth.getInstance();
 
-        if(fAuth.getCurrentUser() != null)
+        /*if(fAuth.getCurrentUser() != null)
         {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
-        }
+        }*/
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener()
         {
@@ -85,7 +86,19 @@ public class Register extends AppCompatActivity
                         if(task.isSuccessful())
                         {
                             Toast.makeText(Register.this, "User Created.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            String UserID = fAuth.getCurrentUser().getUid();
+                            Toast.makeText(Register.this, "ID: " + UserID, Toast.LENGTH_SHORT).show();
+
+                            Handler handler = new Handler(); // Delay for 0.5 seconds
+                            handler.postDelayed(new Runnable()
+                            {
+                                public void run()
+                                {
+                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                    i.putExtra("ValueUID", UserID); // Send through the User's ID to the MainActivity
+                                    startActivity(i);
+                                }
+                            }, 500); // End delay
                         }
                         else
                         {
@@ -99,7 +112,8 @@ public class Register extends AppCompatActivity
         mLoginBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(getApplicationContext(), Login.class));
             }
         });

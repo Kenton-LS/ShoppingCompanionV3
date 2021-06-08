@@ -67,11 +67,15 @@ public class MainActivity extends AppCompatActivity
 
     private StorageTask mUploadTask; // Testing if GitHub works
 
+    String valueUID; // For parsing the current user's ID into the firebase to make sure we only retrieve THIS user's data
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        valueUID = getIntent().getStringExtra("ValueUID"); // Get the current user's ID
 
         // Assigning variables
         mButtonChooseImage = findViewById(R.id.button_choose_image);
@@ -81,8 +85,8 @@ public class MainActivity extends AppCompatActivity
         mImageView = findViewById(R.id.image_view);
         mProgressBar = findViewById(R.id.progress_bar);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        mStorageRef = FirebaseStorage.getInstance().getReference(valueUID + "/uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(valueUID + "/uploads");
 
         // Set OnClick Listeners on buttons and textview (which also functions as an additional button)
         mButtonChooseImage.setOnClickListener(new View.OnClickListener()
@@ -262,8 +266,9 @@ public class MainActivity extends AppCompatActivity
 
     private void openImagesActivity() // On clicking ShowUploads button, displays all folders in Images_View class
     {
-        Intent intent = new Intent(this, ImageViewHolder.class);
-        startActivity(intent);
+        Intent i = new Intent(getApplicationContext(), ImageViewHolder.class);
+        i.putExtra("ValueUID", valueUID); // Send through the User's ID to the MainActivity
+        startActivity(i);
     }
 
     private void SaveImage(Bitmap finalBitmap)

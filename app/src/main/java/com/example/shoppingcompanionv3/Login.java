@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -69,7 +70,19 @@ public class Login extends AppCompatActivity
                         if(task.isSuccessful())
                         {
                             Toast.makeText(Login.this, "User Logged in.", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            String UserID = fAuth.getCurrentUser().getUid();
+                            Toast.makeText(Login.this, "ID: " + UserID, Toast.LENGTH_SHORT).show();
+
+                            Handler handler = new Handler(); // Delay for 0.5 seconds
+                            handler.postDelayed(new Runnable()
+                            {
+                                public void run()
+                                {
+                                    Intent i = new Intent(getApplicationContext(),MainActivity.class);
+                                    i.putExtra("ValueUID", UserID); // Send through the User's ID to the MainActivity
+                                    startActivity(i);
+                                }
+                            }, 500); // End delay
                         }
                         else
                         {
@@ -88,11 +101,5 @@ public class Login extends AppCompatActivity
                 startActivity(new Intent(getApplicationContext(), Register.class));
             }
         });
-    }
-
-    private void openMainActivity() // On clicking ShowUploads button, displays all folders in Images_View class
-    {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 }

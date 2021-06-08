@@ -53,9 +53,10 @@ public class ContentsActivity extends AppCompatActivity
         String value1 = getIntent().getStringExtra("Value1"); // URL passed from ImageViewHolder
         String value2 = getIntent().getStringExtra("Value2"); // Name passed from ImageViewHolder
         String value3 = getIntent().getStringExtra("Value3"); // Name passed from ImageViewHolder
+        String valueUID = getIntent().getStringExtra("ValueUID"); // Get the current user's ID
         Toast.makeText(ContentsActivity.this,  "Name: " + value2 + "\nKey: " + value3 + "\nLink: " + value1, Toast.LENGTH_SHORT).show();
 
-        myRef = FirebaseDatabase.getInstance().getReference("uploads");
+        myRef = FirebaseDatabase.getInstance().getReference(valueUID + "/uploads");
 
         // Declarations
         mImageFolder = findViewById(R.id.image_view_contents);
@@ -98,6 +99,7 @@ public class ContentsActivity extends AppCompatActivity
                 i.putExtra("Value1", value1); // Send through the URL for the image we want to display
                 i.putExtra("Value2", value2); // Send through the name for the image we want to display
                 i.putExtra("Value3", value3);
+                i.putExtra("ValueUID", valueUID); // Send through user's ID to access only THIS USER's DATA
 
                 startActivity(i);
             }
