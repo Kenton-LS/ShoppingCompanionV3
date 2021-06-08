@@ -92,7 +92,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo)
         {
             contextMenu.setHeaderTitle("-Options-");
-            MenuItem doWhatever = contextMenu.add(Menu.NONE, 1, 1, "Statistics");
+            MenuItem doWhatever = contextMenu.add(Menu.NONE, 1, 1, "Do whatever");
             MenuItem delete = contextMenu.add(Menu.NONE, 2, 2, "Delete");
 
             // Handle clicks

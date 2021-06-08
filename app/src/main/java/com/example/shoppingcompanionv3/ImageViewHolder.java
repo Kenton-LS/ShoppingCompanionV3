@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.style.ImageSpan;
@@ -97,25 +96,13 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
     @Override
     public void onItemClick(int position)
     {
-        Toast.makeText(this, "Open click at position: " + position, Toast.LENGTH_SHORT).show();
-
-        // Start of Open Folder -> when clicking on image
-        Upload selectedItem = mUploads.get(position); // Get upload item at click position
-        String selectedKey = selectedItem.getKey();
-
-        Intent i = new Intent(getApplicationContext(), ContentsActivity.class);
-        i.putExtra("Value1", selectedItem.getImageUrl()); // Send through the URL for the image we want to display
-        i.putExtra("Value2", selectedItem.getName()); // Send through the name for the image we want to display
-        i.putExtra("Value3", selectedItem.getKey());
-
-        startActivity(i);
-        // End of Open Folder
+        Toast.makeText(this, "Normal click at position: " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onWhatEverClick(int position)
     {
-        Toast.makeText(this, "Statistics click at position: " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Whatever click at position: " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
