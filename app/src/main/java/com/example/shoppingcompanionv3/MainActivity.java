@@ -169,10 +169,10 @@ public class MainActivity extends AppCompatActivity
             Picasso.get().load(mImageUri).into(mImageView); // For loading Image View
         }
 
-        if (resultCode != Activity.RESULT_OK && data != null && data.getData() != null) {
+        if (resultCode != Activity.RESULT_OK || data != null && data.getData() != null) {
             return;
         }
-        if (requestCode == TAKE_IMAGE_REQUEST) {
+        else if (requestCode == TAKE_IMAGE_REQUEST) {
 
             Bitmap bitmap = (Bitmap) data.getExtras().get("data");
             mImageView.setImageBitmap(bitmap);
