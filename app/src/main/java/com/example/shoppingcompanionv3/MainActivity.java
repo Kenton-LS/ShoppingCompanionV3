@@ -232,7 +232,7 @@ public class MainActivity extends AppCompatActivity
                             Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
                             while (!urlTask.isSuccessful());
                             Uri downloadUrl = urlTask.getResult();
-                            Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),downloadUrl.toString());
+                            Upload upload = new Upload(mEditTextFileName.getText().toString().trim(), downloadUrl.toString()/*, 30*/);
 
                             String uploadId = mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upload);

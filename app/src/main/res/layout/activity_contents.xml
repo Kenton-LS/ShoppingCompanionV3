@@ -32,10 +32,37 @@
             android:text="ADD NEW ITEM"
             android:textColor="#FFFFFF" />
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_confirm"
+                android:layout_width="123dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="16dp"
+                android:text="CONFIRM" />
+
+            <EditText
+                android:id="@+id/et_size"
+                android:layout_width="246dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:ems="10"
+                android:gravity="center|center_vertical"
+                android:hint="00 / 00 - Enter new size"
+                android:inputType="textPersonName" />
+
+        </RelativeLayout>
+
         <ListView
             android:id="@+id/lv_contents"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+        </ListView>
+
     </LinearLayout>
 
 </LinearLayout>

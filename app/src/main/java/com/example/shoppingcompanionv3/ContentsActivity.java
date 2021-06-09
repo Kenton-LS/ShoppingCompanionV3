@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,9 +36,11 @@ public class ContentsActivity extends AppCompatActivity
 
     private ImageView mImageFolder;
     private TextView mTextFolder;
-    int index = 0;
+    int index = 0; // Number of children items in this folder
 
     Button push;
+    Button confirm; // For size / goal
+    private EditText mEditTextSize;
 
     List<String> contentList; // For FireBase list of contents
     ArrayAdapter adapter;
@@ -52,7 +56,8 @@ public class ContentsActivity extends AppCompatActivity
 
         String value1 = getIntent().getStringExtra("Value1"); // URL passed from ImageViewHolder
         String value2 = getIntent().getStringExtra("Value2"); // Name passed from ImageViewHolder
-        String value3 = getIntent().getStringExtra("Value3"); // Name passed from ImageViewHolder
+        String value3 = getIntent().getStringExtra("Value3"); // Key passed from ImageViewHolder
+        //int value4 = getIntent().getIntExtra("Value4", 30); // Goal passed from ImageViewHolder
         String valueUID = getIntent().getStringExtra("ValueUID"); // Get the current user's ID
         Toast.makeText(ContentsActivity.this,  "Name: " + value2 + "\nKey: " + value3 + "\nLink: " + value1, Toast.LENGTH_SHORT).show();
 
@@ -64,6 +69,8 @@ public class ContentsActivity extends AppCompatActivity
         contentsListView = findViewById(R.id.lv_contents);
 
         push = findViewById(R.id.btn_push);
+        confirm = findViewById(R.id.btn_confirm);
+        mEditTextSize = findViewById(R.id.et_size);
 
         // Set image and text for folder header
         mTextFolder.setText(value2);
@@ -81,6 +88,8 @@ public class ContentsActivity extends AppCompatActivity
                 {
                     i++;
                     index = i;
+                    //String newTextForET = (index + " / " + value4); // Set text in sizeview to firebase
+                    //mEditTextSize.setText(newTextForET);
                 }
             }
             @Override
@@ -99,9 +108,48 @@ public class ContentsActivity extends AppCompatActivity
                 i.putExtra("Value1", value1); // Send through the URL for the image we want to display
                 i.putExtra("Value2", value2); // Send through the name for the image we want to display
                 i.putExtra("Value3", value3);
+                //i.putExtra("Value4", value4);
                 i.putExtra("ValueUID", valueUID); // Send through user's ID to access only THIS USER's DATA
 
                 startActivity(i);
+            }
+        });
+
+        confirm.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) // Update size in FireBase
+            {
+                String newSize = mEditTextSize.getText().toString().trim(); // Get string for size, and TRY to make it an int first
+                int size = tryParse(newSize); // Take textbox text, convert to int via TryParse Method
+
+                mEditTextSize.setText("");
+                mEditTextSize.setHint("*CHANGING SIZE*");
+
+                Handler handler = new Handler(); // Delay for 0.5 seconds
+                handler.postDelayed(new Runnable()
+                {
+                    public void run()
+                    {
+                        String newHintForET = ("Enter new size"); // Update textbox
+                        mEditTextSize.setHint(newHintForET);
+
+                        String newTextForET = (index + " / " + newSize);
+                        mEditTextSize.setText(newTextForET);
+
+                        //myRef.child(value3).child("goal").setValue(newSize);
+                    }
+                }, 500); // End delay
+            }
+        });
+
+        mEditTextSize.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                mEditTextSize.setText("");
+                mEditTextSize.setHint("Enter new size");
             }
         });
 
@@ -133,5 +181,17 @@ public class ContentsActivity extends AppCompatActivity
             }
         });
         // ---------------------------------------------------------------------------------------------------------------------------------------//
+    }
+
+    public static Integer tryParse(String text) // For checking size
+    {
+        try
+        {
+            return Integer.parseInt(text);
+        }
+        catch (NumberFormatException e)
+        {
+            return 30;
+        }
     }
 }

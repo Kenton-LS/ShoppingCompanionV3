@@ -111,6 +111,7 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
         i.putExtra("Value1", selectedItem.getImageUrl()); // Send through the URL for the image we want to display
         i.putExtra("Value2", selectedItem.getName()); // Send through the name for the image we want to display
         i.putExtra("Value3", selectedItem.getKey());
+        //i.putExtra("Value4", selectedItem.getGoal());
         i.putExtra("ValueUID", valueUID);
 
         startActivity(i);

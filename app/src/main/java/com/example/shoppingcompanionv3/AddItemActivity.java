@@ -49,7 +49,8 @@ public class AddItemActivity extends AppCompatActivity
 
         String value1 = getIntent().getStringExtra("Value1"); // URL passed from ImageViewHolder
         String value2 = getIntent().getStringExtra("Value2"); // Name passed from ImageViewHolder
-        String value3 = getIntent().getStringExtra("Value3"); // Name passed from ImageViewHolder
+        String value3 = getIntent().getStringExtra("Value3"); // Key passed from ImageViewHolder
+        //int value4 = getIntent().getIntExtra("Value4", 30); // Goal passed from ImageViewHolder
         String valueUID = getIntent().getStringExtra("ValueUID"); // User ID
 
         myRef = FirebaseDatabase.getInstance().getReference(valueUID + "/uploads");
@@ -105,6 +106,8 @@ public class AddItemActivity extends AppCompatActivity
 
                 Toast.makeText(AddItemActivity.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
                 myRef.child(value3).child("contents").child(String.valueOf(index)).setValue(contents);
+
+                itemName.setText(""); itemQty.setText(""); itemDate.setText(""); itemDesc.setText("");
             }
         });
 
@@ -116,7 +119,8 @@ public class AddItemActivity extends AppCompatActivity
                 Intent i = new Intent(getApplicationContext(), ContentsActivity.class);
                 i.putExtra("Value1", value1); // Send through the URL for the image we want to display
                 i.putExtra("Value2", value2); // Send through the name for the image we want to display
-                i.putExtra("Value3", value3);
+                i.putExtra("Value3", value3); // Key
+                //i.putExtra("Value4", value4); // Goal
                 i.putExtra("ValueUID", valueUID); // Return this user's ID
 
                 startActivity(i);

@@ -7,6 +7,7 @@ public class Upload
 {
     private String mName;
     private String mImageUrl;
+    //private int mGoal;
     private String mKey; // For deleting from FireBase
 
     // Make work with Firebase
@@ -16,7 +17,7 @@ public class Upload
     }
 
     // Take name and image url when creating items
-    public Upload(String name, String imageUrl)
+    public Upload(String name, String imageUrl/*, int goal*/)
     {
         // If there is no name typed by accident
         if (name.trim().equals(""))
@@ -27,6 +28,7 @@ public class Upload
         // Set values
         mName = name;
         mImageUrl = imageUrl;
+        //mGoal = 30;
     }
 
     // Getters and Setters
@@ -49,6 +51,10 @@ public class Upload
     {
         mImageUrl = imageUrl;
     }
+
+    //public int getGoal() { return mGoal; }
+
+    //public void setGoal(int goal) { mGoal = goal; }
 
     @Exclude
     public String getKey()
