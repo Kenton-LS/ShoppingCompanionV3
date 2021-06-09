@@ -44,6 +44,8 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import static android.content.ContentValues.TAG;
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity
 
         mStorageRef = FirebaseStorage.getInstance().getReference(valueUID + "/uploads");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference(valueUID + "/uploads");
-
+        isStoragePermissionGranted();
         // Set OnClick Listeners on buttons and textview (which also functions as an additional button)
         mButtonChooseImage.setOnClickListener(new View.OnClickListener()
         {
@@ -273,19 +275,17 @@ public class MainActivity extends AppCompatActivity
 
     private void SaveImage(Bitmap finalBitmap)
     {
-        String root =
+        File root =
                 Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES).toString(); //Create string for path of save
+                        Environment.DIRECTORY_PICTURES); //Create string for path of save
         File myDir = new File(root + "/saved_images"); //Create the file with root path
-        Log.d(root, "Save Location for images."); //Log the call
+        Log.d(root.toString(), "Save Location for images."); //Log the call
         if (!myDir.exists())
         {
             myDir.mkdirs(); //Make the directory if it doesn't exist
         }
-        Random generator = new Random(); // Create a new random generator
-        int n = 10000;
-        n = generator.nextInt(n); //Name of the image
-        String imgName = "Image-" + n + ".jpg"; //Image name is: Image-(random number).jpg
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imgName = "Image-" + timeStamp + ".jpg"; //Image name is: Image-(random number).jpg
         File file = new File(myDir, imgName);//Making the image with the path and image name
         if (file.exists()) file.delete(); //If it already exists, delete and replace it
         try
@@ -297,11 +297,13 @@ public class MainActivity extends AppCompatActivity
             mImageUri = mImageUri.normalizeScheme();
             bos.flush();
             bos.close();
+            bos.close();
             Log.d(bos.toString(), " | File saved successfully!");
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            myDir.mkdirs();
         }
     }
 
