@@ -13,10 +13,14 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class StatisticScreen extends AppCompatActivity
 {
-    //-----Firebase refs as usual---------//
+    //------------------------------------References------------------------------------------//
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef;
-    //-----------------------------------//
+    String folderImageUrl;
+    String folderName;
+    String folderFirebaseKey;
+    String userFirebaseID;
+    //----------------------------------------------------------------------------------------//
 
     Button btnBarChart;
     Button btnPieChart;
@@ -28,14 +32,13 @@ public class StatisticScreen extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statisticscreen);
 
-        //-----References as usual-------//
-        String folderImageUrl = getIntent().getStringExtra("FolderImageUrl");
-        String folderName = getIntent().getStringExtra("FolderName");
-        String folderFirebaseKey = getIntent().getStringExtra("FolderFirebaseKey");
-        String userFirebaseID = getIntent().getStringExtra("UserFirebaseID");
-        Toast.makeText(StatisticScreen.this,  "Name: " + folderName + "\nKey: " + folderFirebaseKey + "\nLink: " + folderImageUrl, Toast.LENGTH_SHORT).show();
+        //------------------------------------References------------------------------------------//
+        folderImageUrl = getIntent().getStringExtra("FolderImageUrl");
+        folderName = getIntent().getStringExtra("FolderName");
+        folderFirebaseKey = getIntent().getStringExtra("FolderFirebaseKey");
+        userFirebaseID = getIntent().getStringExtra("UserFirebaseID");
         myRef = FirebaseDatabase.getInstance().getReference(userFirebaseID + "/uploads");
-        //------------------------------//
+        //----------------------------------------------------------------------------------------//
 
         btnBarChart = findViewById(R.id.ButtonBarChart);
         btnPieChart = findViewById(R.id.ButtonPieChart);
@@ -46,7 +49,10 @@ public class StatisticScreen extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                startActivity(new Intent(getApplicationContext(), ChartBarScreen.class));
+                //startActivity(new Intent(getApplicationContext(), ChartBarScreen.class));
+                Intent i = new Intent(getApplicationContext(), ChartBarScreen.class);
+                sendDetails(i);
+                startActivity(i);
             }
         });
 
@@ -55,7 +61,10 @@ public class StatisticScreen extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                startActivity(new Intent(getApplicationContext(), ChartPieScreen.class));
+                //startActivity(new Intent(getApplicationContext(), ChartPieScreen.class));
+                Intent i = new Intent(getApplicationContext(), ChartPieScreen.class);
+                sendDetails(i);
+                startActivity(i);
             }
         });
 
@@ -64,8 +73,19 @@ public class StatisticScreen extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                startActivity(new Intent(getApplicationContext(), ChartRadarScreen.class));
+                //startActivity(new Intent(getApplicationContext(), ChartRadarScreen.class));
+                Intent i = new Intent(getApplicationContext(), ChartRadarScreen.class);
+                sendDetails(i);
+                startActivity(i);
             }
         });
+    }
+
+    protected void sendDetails(Intent i)
+    {
+        i.putExtra("FolderImageUrl", folderImageUrl);
+        i.putExtra("FolderName", folderName);
+        i.putExtra("FolderFirebaseKey", folderFirebaseKey);
+        i.putExtra("UserFirebaseID", userFirebaseID);
     }
 }

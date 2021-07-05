@@ -8,6 +8,8 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -16,11 +18,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ChartBarScreen extends AppCompatActivity
 {
+    //------------------------------------References------------------------------------------//
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef;
+    String folderImageUrl;
+    String folderName;
+    String folderFirebaseKey;
+    String userFirebaseID;
+    //----------------------------------------------------------------------------------------//
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chartbar);
+
+        //------------------------------------References------------------------------------------//
+        folderImageUrl = getIntent().getStringExtra("FolderImageUrl");
+        folderName = getIntent().getStringExtra("FolderName");
+        folderFirebaseKey = getIntent().getStringExtra("FolderFirebaseKey");
+        userFirebaseID = getIntent().getStringExtra("UserFirebaseID");
+        myRef = FirebaseDatabase.getInstance().getReference(userFirebaseID + "/uploads");
+        //----------------------------------------------------------------------------------------//
 
         BarChart barChart = findViewById(R.id.barChart);
 
