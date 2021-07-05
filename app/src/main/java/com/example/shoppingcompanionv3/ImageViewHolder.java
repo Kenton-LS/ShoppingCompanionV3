@@ -40,7 +40,7 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
     private FirebaseStorage mStorage; // Used to get reference to images in FireBase storage
     private ValueEventListener mDBListener;
 
-    String valueUID; // For parsing the current user's ID into the firebase to make sure we only retrieve THIS user's data
+    String userFirebaseID; // For parsing the current user's ID into the firebase to make sure we only retrieve THIS user's data
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,7 +48,7 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_images_view);
 
-        valueUID = getIntent().getStringExtra("ValueUID"); // Get the current user's ID
+        userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // Get the current user's ID
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true); // Increase performance of recycler view
@@ -64,7 +64,7 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
 
         mStorage = FirebaseStorage.getInstance();
 
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference(valueUID + "/uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(userFirebaseID + "/uploads");
 
         // Now need to get data out of uploads
         //mDatabaseRef.addValueEventListener(new ValueEventListener() - OLD: accidentally could create duplicate Database Refs
@@ -108,11 +108,11 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
         String selectedKey = selectedItem.getKey();
 
         Intent i = new Intent(getApplicationContext(), ContentsActivity.class);
-        i.putExtra("Value1", selectedItem.getImageUrl()); // Send through the URL for the image we want to display
-        i.putExtra("Value2", selectedItem.getName()); // Send through the name for the image we want to display
-        i.putExtra("Value3", selectedItem.getKey());
+        i.putExtra("FolderImageUrl", selectedItem.getImageUrl()); // Send through the URL for the image we want to display
+        i.putExtra("FolderName", selectedItem.getName()); // Send through the name for the image we want to display
+        i.putExtra("FolderFirebaseKey", selectedItem.getKey());
         //i.putExtra("Value4", selectedItem.getGoal());
-        i.putExtra("ValueUID", valueUID);
+        i.putExtra("UserFirebaseID", userFirebaseID);
 
         startActivity(i);
         // End of Open Folder

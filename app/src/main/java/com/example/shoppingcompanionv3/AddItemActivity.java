@@ -47,13 +47,13 @@ public class AddItemActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
-        String value1 = getIntent().getStringExtra("Value1"); // URL passed from ImageViewHolder
-        String value2 = getIntent().getStringExtra("Value2"); // Name passed from ImageViewHolder
-        String value3 = getIntent().getStringExtra("Value3"); // Key passed from ImageViewHolder
+        String folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
+        String folderName = getIntent().getStringExtra("FolderName"); // Name passed from ImageViewHolder
+        String folderFirebaseKey = getIntent().getStringExtra("FolderFirebaseKey"); // Key passed from ImageViewHolder
         //int value4 = getIntent().getIntExtra("Value4", 30); // Goal passed from ImageViewHolder
-        String valueUID = getIntent().getStringExtra("ValueUID"); // User ID
+        String userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // User ID
 
-        myRef = FirebaseDatabase.getInstance().getReference(valueUID + "/uploads");
+        myRef = FirebaseDatabase.getInstance().getReference(userFirebaseID + "/uploads");
 
         // Declarations
         mImageFolder = findViewById(R.id.image_view_contents4);
@@ -67,14 +67,14 @@ public class AddItemActivity extends AppCompatActivity
         back = findViewById(R.id.btn_back);
 
         // Set image and text for folder header
-        mTextFolder.setText(value2);
-        Picasso.get().load(value1).placeholder(R.mipmap.ic_launcher) // Mipmap creates default placeholder image while real images load
+        mTextFolder.setText(folderName);
+        Picasso.get().load(folderImageUrl).placeholder(R.mipmap.ic_launcher) // Mipmap creates default placeholder image while real images load
                 .fit().centerCrop().into(mImageFolder);
 
         // ---------------------------------------------------------------------------------------------------------------------------------------//
         // For PUSH button
 
-        myRef.child(value3).child("contents").addValueEventListener(new ValueEventListener()
+        myRef.child(folderFirebaseKey).child("contents").addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot snapshot)
@@ -105,7 +105,7 @@ public class AddItemActivity extends AppCompatActivity
                 //myRef.child(String.valueOf(i)).setValue(contents); OLD
 
                 Toast.makeText(AddItemActivity.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
-                myRef.child(value3).child("contents").child(String.valueOf(index)).setValue(contents);
+                myRef.child(folderFirebaseKey).child("contents").child(String.valueOf(index)).setValue(contents);
 
                 itemName.setText(""); itemQty.setText(""); itemDate.setText(""); itemDesc.setText("");
             }
@@ -117,11 +117,11 @@ public class AddItemActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 Intent i = new Intent(getApplicationContext(), ContentsActivity.class);
-                i.putExtra("Value1", value1); // Send through the URL for the image we want to display
-                i.putExtra("Value2", value2); // Send through the name for the image we want to display
-                i.putExtra("Value3", value3); // Key
+                i.putExtra("FolderImageUrl", folderImageUrl); // Send through the URL for the image we want to display
+                i.putExtra("FolderName", folderName); // Send through the name for the image we want to display
+                i.putExtra("FolderFirebaseKey", folderFirebaseKey); // Key
                 //i.putExtra("Value4", value4); // Goal
-                i.putExtra("ValueUID", valueUID); // Return this user's ID
+                i.putExtra("UserFirebaseID", userFirebaseID); // Return this user's ID
 
                 startActivity(i);
             }
