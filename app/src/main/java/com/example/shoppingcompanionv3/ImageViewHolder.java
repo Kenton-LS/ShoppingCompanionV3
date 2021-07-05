@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.text.style.ImageSpan;
@@ -39,11 +40,15 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
     private FirebaseStorage mStorage; // Used to get reference to images in FireBase storage
     private ValueEventListener mDBListener;
 
+    String valueUID; // For parsing the current user's ID into the firebase to make sure we only retrieve THIS user's data
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_images_view);
+
+        valueUID = getIntent().getStringExtra("ValueUID"); // Get the current user's ID
 
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true); // Increase performance of recycler view
@@ -59,7 +64,7 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
 
         mStorage = FirebaseStorage.getInstance();
 
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(valueUID + "/uploads");
 
         // Now need to get data out of uploads
         //mDatabaseRef.addValueEventListener(new ValueEventListener() - OLD: accidentally could create duplicate Database Refs
@@ -96,13 +101,27 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
     @Override
     public void onItemClick(int position)
     {
-        Toast.makeText(this, "Normal click at position: " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Open click at position: " + position, Toast.LENGTH_SHORT).show();
+
+        // Start of Open Folder -> when clicking on image
+        Upload selectedItem = mUploads.get(position); // Get upload item at click position
+        String selectedKey = selectedItem.getKey();
+
+        Intent i = new Intent(getApplicationContext(), ContentsActivity.class);
+        i.putExtra("Value1", selectedItem.getImageUrl()); // Send through the URL for the image we want to display
+        i.putExtra("Value2", selectedItem.getName()); // Send through the name for the image we want to display
+        i.putExtra("Value3", selectedItem.getKey());
+        //i.putExtra("Value4", selectedItem.getGoal());
+        i.putExtra("ValueUID", valueUID);
+
+        startActivity(i);
+        // End of Open Folder
     }
 
     @Override
     public void onWhatEverClick(int position)
     {
-        Toast.makeText(this, "Whatever click at position: " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Statistics click at position: " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override

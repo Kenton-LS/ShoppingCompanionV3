@@ -3,14 +3,22 @@ package com.example.shoppingcompanionv3;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -22,6 +30,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -31,11 +40,20 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
+
+import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity
 {
     private static final int PICK_IMAGE_REQUEST = 1; // Constant used to identify image request
+    private static final int TAKE_IMAGE_REQUEST = 100; // Constant used to identify image request
 
     private Button mButtonChooseImage; // For image chooser button
     private Button mButtonUpload; // For uploading button
@@ -51,11 +69,15 @@ public class MainActivity extends AppCompatActivity
 
     private StorageTask mUploadTask; // Testing if GitHub works
 
+    String valueUID; // For parsing the current user's ID into the firebase to make sure we only retrieve THIS user's data
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        valueUID = getIntent().getStringExtra("ValueUID"); // Get the current user's ID
 
         // Assigning variables
         mButtonChooseImage = findViewById(R.id.button_choose_image);
@@ -65,9 +87,9 @@ public class MainActivity extends AppCompatActivity
         mImageView = findViewById(R.id.image_view);
         mProgressBar = findViewById(R.id.progress_bar);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads");
-
+        mStorageRef = FirebaseStorage.getInstance().getReference(valueUID + "/uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(valueUID + "/uploads");
+        isStoragePermissionGranted();
         // Set OnClick Listeners on buttons and textview (which also functions as an additional button)
         mButtonChooseImage.setOnClickListener(new View.OnClickListener()
         {
@@ -106,6 +128,22 @@ public class MainActivity extends AppCompatActivity
                 openImagesActivity();
             }
         });
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) //Asks for permission to use camera if it doesn't have any
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.CAMERA
+            }, TAKE_IMAGE_REQUEST);
+        }
+
+        final Button camButton = findViewById(R.id.cameraButton); //Finds the camera button
+        camButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent imageCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(imageCapture, TAKE_IMAGE_REQUEST); //Takes the image
+            }
+        });
     }
 
     private void openFileChooser()
@@ -131,6 +169,18 @@ public class MainActivity extends AppCompatActivity
             // Check for image request, if image was successfully picked, return something back
             mImageUri = data.getData(); // Now Uri contains image UI, will be used later for sending to FireBase
             Picasso.get().load(mImageUri).into(mImageView); // For loading Image View
+        }
+
+        if (resultCode != Activity.RESULT_OK || data != null && data.getData() != null) {
+            return;
+        }
+        else if (requestCode == TAKE_IMAGE_REQUEST) {
+
+            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+            mImageView.setImageBitmap(bitmap);
+            if (isStoragePermissionGranted()) {
+                SaveImage(bitmap);
+            }
         }
     }
 
@@ -170,14 +220,22 @@ public class MainActivity extends AppCompatActivity
                                 }
                             }, 500); // Delay of progress bar reset for a half second (shows 100% for 0.5 secs)
 
-                            Toast.makeText(MainActivity.this, "Upload success", Toast.LENGTH_LONG).show();
+                            /*
                             Upload upload = new Upload(mEditTextFileName.getText().toString().trim(),
                                     taskSnapshot.getMetadata().getReference().getDownloadUrl().toString()); // Name and image url parameters
 
                             // Make entry in database
                             String uploadId = mDatabaseRef.push().getKey();
-                            mDatabaseRef.child(uploadId).setValue(upload); // Take unique id and set data to uploadfile (which contains upload name and url)
+                            mDatabaseRef.child(uploadId).setValue(upload); // Take unique id and set data to uploadfile (which contains upload name and url)*/
 
+                            Toast.makeText(MainActivity.this, "Upload success", Toast.LENGTH_LONG).show();
+                            Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                            while (!urlTask.isSuccessful());
+                            Uri downloadUrl = urlTask.getResult();
+                            Upload upload = new Upload(mEditTextFileName.getText().toString().trim(), downloadUrl.toString()/*, 30*/);
+
+                            String uploadId = mDatabaseRef.push().getKey();
+                            mDatabaseRef.child(uploadId).setValue(upload);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener()
@@ -210,7 +268,66 @@ public class MainActivity extends AppCompatActivity
 
     private void openImagesActivity() // On clicking ShowUploads button, displays all folders in Images_View class
     {
-        Intent intent = new Intent(this, ImageViewHolder.class);
-        startActivity(intent);
+        Intent i = new Intent(getApplicationContext(), ImageViewHolder.class);
+        i.putExtra("ValueUID", valueUID); // Send through the User's ID to the MainActivity
+        startActivity(i);
+    }
+
+    private void SaveImage(Bitmap finalBitmap)
+    {
+        File root =
+                Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_PICTURES); //Create string for path of save
+        File myDir = new File(root + "/saved_images"); //Create the file with root path
+        Log.d(root.toString(), "Save Location for images."); //Log the call
+        if (!myDir.exists())
+        {
+            myDir.mkdirs(); //Make the directory if it doesn't exist
+        }
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imgName = "Image-" + timeStamp + ".jpg"; //Image name is: Image-(random number).jpg
+        File file = new File(myDir, imgName);//Making the image with the path and image name
+        if (file.exists()) file.delete(); //If it already exists, delete and replace it
+        try
+        { // Attempt to output the file and compress it
+            final FileOutputStream out = new FileOutputStream(file);
+            final BufferedOutputStream bos = new BufferedOutputStream(out, 8192);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bos);
+            mImageUri = Uri.fromFile(file);
+            mImageUri = mImageUri.normalizeScheme();
+            bos.flush();
+            bos.close();
+            bos.close();
+            Log.d(bos.toString(), " | File saved successfully!");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            myDir.mkdirs();
+        }
+    }
+
+    public boolean isStoragePermissionGranted()
+    {
+        if (Build.VERSION.SDK_INT >= 23)
+        { // Check build of android to see if it automatically grants permissions
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED)
+            {
+                Log.v(TAG, "Permission is granted");
+                return true;
+            }
+            else
+            {
+                Log.v(TAG, "Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                return false;
+            }
+        }
+        else
+        { // Permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG, "Permission is granted");
+            return true;
+        }
     }
 }
