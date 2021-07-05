@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
     private static final int TAKE_IMAGE_REQUEST = 100; // Constant used to identify image request
 
     ImageView mButtonChooseImage; // For image chooser button
-    private Button mButtonUpload; // For uploading button
+    ImageView mButtonUpload; // For uploading button
     private TextView mTextViewShowUploads; // Text view (which also works as button)
     private EditText mEditTextFileName; // For editing image name
     private android.widget.ImageView mImageView; // Display image in view
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
 
         // Assigning variables
         mButtonChooseImage = findViewById(R.id.img_addFile);
-        mButtonUpload = findViewById(R.id.button_upload);
+        mButtonUpload = findViewById(R.id.img_confirm);
         mTextViewShowUploads = findViewById(R.id.text_view_show_uploads);
         mEditTextFileName = findViewById(R.id.edit_text_file_name);
         mImageView = findViewById(R.id.image_view);
