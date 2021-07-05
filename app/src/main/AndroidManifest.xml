@@ -29,6 +29,10 @@
         <activity android:name=".InFolderScreen" />
         <activity android:name=".AllFolderScreen" />
         <activity android:name=".MainScreen"/>
+        <activity android:name=".StatisticScreen"/>
+        <activity android:name=".ChartRadarScreen"/>
+        <activity android:name=".ChartPieScreen"/>
+        <activity android:name=".ChartBarScreen"/>
     </application>
 
 

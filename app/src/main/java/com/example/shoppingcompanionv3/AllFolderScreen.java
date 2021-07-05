@@ -118,6 +118,19 @@ public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.O
     public void onWhatEverClick(int position)
     {
         Toast.makeText(this, "Statistics click at position: " + position, Toast.LENGTH_SHORT).show();
+
+        // Open Stats for this folder //
+        Upload selectedItem = mUploads.get(position);
+        String selectedKey = selectedItem.getKey();
+
+        Intent i = new Intent(getApplicationContext(), StatisticScreen.class);
+        i.putExtra("FolderImageUrl", selectedItem.getImageUrl());
+        i.putExtra("FolderName", selectedItem.getName());
+        i.putExtra("FolderFirebaseKey", selectedItem.getKey());
+        i.putExtra("UserFirebaseID", userFirebaseID);
+
+        startActivity(i);
+        //-----------//
     }
 
     @Override
