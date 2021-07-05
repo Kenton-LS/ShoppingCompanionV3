@@ -27,6 +27,7 @@ public class AddItemScreen extends AppCompatActivity
     private ImageView mImageFolder;
     private TextView mTextFolder;
     EditText itemName, itemQty, itemDate, itemDesc; // For adding a new item -> the name and quantity
+    View itemTag;
     int index = 0; // For determining number of items in FireBase
 
     Button push, back;
@@ -56,6 +57,7 @@ public class AddItemScreen extends AppCompatActivity
         itemQty = findViewById(R.id.et_itemQty);
         itemDate = findViewById(R.id.et_itemDate);
         itemDesc = findViewById(R.id.et_itemDesc);
+        itemTag = findViewById(R.id.sp_itemTag);
         push = findViewById(R.id.btn_push);
         back = findViewById(R.id.btn_back);
 

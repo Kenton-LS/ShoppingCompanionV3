@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">ShoppingCompanionV3</string>
     <string name="take_picture">Take Picture</string>
+
+    <string-array name= "Food_Groups">
+        <item>Fruits</item>
+        <item>Vegetables</item>
+        <item>Grains</item>
+        <item>Protein</item>
+        <item>Dairy</item>
+    </string-array>
 </resources>

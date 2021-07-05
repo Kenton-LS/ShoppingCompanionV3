@@ -41,12 +41,20 @@
             android:hint="New item's quantity"
             android:inputType="textPersonName" />
 
+        <Spinner
+            android:id="@+id/sp_itemTag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:entries="@array/Food_Groups"
+            android:spinnerMode="dropdown" />
+
         <EditText
             android:id="@+id/et_itemDate"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:ems="10"
-            android:hint="New item's date obtained"
+            android:hint="New item's date obtained  (optional)"
             android:inputType="textPersonName" />
 
         <EditText
