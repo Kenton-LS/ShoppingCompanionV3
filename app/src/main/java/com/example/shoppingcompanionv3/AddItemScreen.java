@@ -1,21 +1,16 @@
 package com.example.shoppingcompanionv3;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,9 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
-public class AddItemActivity extends AppCompatActivity
+public class AddItemScreen extends AppCompatActivity
 {
     FirebaseDatabase database = FirebaseDatabase.getInstance(); // FireBase Reference
     //DatabaseReference myRef = database.getReference("message");
@@ -45,7 +38,7 @@ public class AddItemActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_item);
+        setContentView(R.layout.activity_additemscreen);
 
         String folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
         String folderName = getIntent().getStringExtra("FolderName"); // Name passed from ImageViewHolder
@@ -104,7 +97,7 @@ public class AddItemActivity extends AppCompatActivity
                 contents = new Contents(enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc);
                 //myRef.child(String.valueOf(i)).setValue(contents); OLD
 
-                Toast.makeText(AddItemActivity.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddItemScreen.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
                 myRef.child(folderFirebaseKey).child("contents").child(String.valueOf(index)).setValue(contents);
 
                 itemName.setText(""); itemQty.setText(""); itemDate.setText(""); itemDesc.setText("");
@@ -116,7 +109,7 @@ public class AddItemActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent i = new Intent(getApplicationContext(), ContentsActivity.class);
+                Intent i = new Intent(getApplicationContext(), InFolderScreen.class);
                 i.putExtra("FolderImageUrl", folderImageUrl); // Send through the URL for the image we want to display
                 i.putExtra("FolderName", folderName); // Send through the name for the image we want to display
                 i.putExtra("FolderFirebaseKey", folderFirebaseKey); // Key

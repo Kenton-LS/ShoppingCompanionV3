@@ -25,10 +25,10 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter></activity>
         <activity android:name=".Register" />
-        <activity android:name=".AddItemActivity"/>
-        <activity android:name=".ContentsActivity" />
-        <activity android:name=".ImageViewHolder" />
-        <activity android:name=".MainActivity"/>
+        <activity android:name=".AddItemScreen"/>
+        <activity android:name=".InFolderScreen" />
+        <activity android:name=".AllFolderScreen" />
+        <activity android:name=".MainScreen"/>
     </application>
 
 

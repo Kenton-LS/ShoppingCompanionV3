@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,8 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,7 +25,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContentsActivity extends AppCompatActivity
+public class InFolderScreen extends AppCompatActivity
 {
     FirebaseDatabase database = FirebaseDatabase.getInstance(); // FireBase Reference
     //DatabaseReference myRef = database.getReference("message");
@@ -52,14 +49,14 @@ public class ContentsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contents);
+        setContentView(R.layout.activity_infolderscreen);
 
         String folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
         String folderName = getIntent().getStringExtra("FolderName"); // Name passed from ImageViewHolder
         String folderFirebaseKey = getIntent().getStringExtra("FolderFirebaseKey"); // Key passed from ImageViewHolder
         //int value4 = getIntent().getIntExtra("Value4", 30); // Goal passed from ImageViewHolder
         String userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // Get the current user's ID
-        Toast.makeText(ContentsActivity.this,  "Name: " + folderName + "\nKey: " + folderFirebaseKey + "\nLink: " + folderImageUrl, Toast.LENGTH_SHORT).show();
+        Toast.makeText(InFolderScreen.this,  "Name: " + folderName + "\nKey: " + folderFirebaseKey + "\nLink: " + folderImageUrl, Toast.LENGTH_SHORT).show();
 
         myRef = FirebaseDatabase.getInstance().getReference(userFirebaseID + "/uploads");
 
@@ -104,7 +101,7 @@ public class ContentsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent i = new Intent(getApplicationContext(), AddItemActivity.class);
+                Intent i = new Intent(getApplicationContext(), AddItemScreen.class);
                 i.putExtra("FolderImageUrl", folderImageUrl); // Send through the URL for the image we want to display
                 i.putExtra("FolderName", folderName); // Send through the name for the image we want to display
                 i.putExtra("FolderFirebaseKey", folderFirebaseKey);
@@ -169,14 +166,14 @@ public class ContentsActivity extends AppCompatActivity
                 }
 
                 // Pass in current context, layout, and orderList
-                adapter = new ArrayAdapter(ContentsActivity.this, android.R.layout.simple_list_item_1, contentList);
+                adapter = new ArrayAdapter(InFolderScreen.this, android.R.layout.simple_list_item_1, contentList);
                 contentsListView.setAdapter(adapter); // Takes all the data and displays it into the list
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error)
             {
-                Toast.makeText(ContentsActivity.this, error.getMessage(), Toast.LENGTH_SHORT);
+                Toast.makeText(InFolderScreen.this, error.getMessage(), Toast.LENGTH_SHORT);
             }
         });
         // ---------------------------------------------------------------------------------------------------------------------------------------//

@@ -6,12 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-import android.text.style.ImageSpan;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -27,7 +23,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.OnItemClickListener // Use interface created for options
+public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.OnItemClickListener // Use interface created for options
 {
     private RecyclerView mRecyclerView;
     private ImageAdapter mAdapter;
@@ -46,7 +42,7 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_images_view);
+        setContentView(R.layout.activity_allfolderscreen);
 
         userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // Get the current user's ID
 
@@ -58,9 +54,9 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
 
         mUploads = new ArrayList<>(); // Initialize uploads as arraylist
 
-        mAdapter = new ImageAdapter(ImageViewHolder.this, mUploads);
+        mAdapter = new ImageAdapter(AllFolderScreen.this, mUploads);
         mRecyclerView.setAdapter(mAdapter); // Where the MAGIC happens
-        mAdapter.setOnItemClickListener(ImageViewHolder.this); // Method to parse the listener
+        mAdapter.setOnItemClickListener(AllFolderScreen.this); // Method to parse the listener
 
         mStorage = FirebaseStorage.getInstance();
 
@@ -91,7 +87,7 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
             public void onCancelled(@NonNull DatabaseError error)
             {
                 // Call if error -> eg no permission to read data from DataBase
-                Toast.makeText(ImageViewHolder.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AllFolderScreen.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 mProgressCircle.setVisibility(View.INVISIBLE); // Hide default image loader
             }
         });
@@ -107,7 +103,7 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
         Upload selectedItem = mUploads.get(position); // Get upload item at click position
         String selectedKey = selectedItem.getKey();
 
-        Intent i = new Intent(getApplicationContext(), ContentsActivity.class);
+        Intent i = new Intent(getApplicationContext(), InFolderScreen.class);
         i.putExtra("FolderImageUrl", selectedItem.getImageUrl()); // Send through the URL for the image we want to display
         i.putExtra("FolderName", selectedItem.getName()); // Send through the name for the image we want to display
         i.putExtra("FolderFirebaseKey", selectedItem.getKey());
@@ -140,7 +136,7 @@ public class ImageViewHolder extends AppCompatActivity implements ImageAdapter.O
                 // Only delete item from database if it was successfully deleted from storage
                 // Otherwise there could be items in FireBase that don't exist in Android Storage
                 mDatabaseRef.child(selectedKey).removeValue();
-                Toast.makeText(ImageViewHolder.this, "Folder deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AllFolderScreen.this, "Folder deleted", Toast.LENGTH_SHORT).show();
             }
         });
     }
