@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class AddItemScreen extends AppCompatActivity
+import java.lang.reflect.Array;
+
+public class AddItemScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
     FirebaseDatabase database = FirebaseDatabase.getInstance(); // FireBase Reference
     //DatabaseReference myRef = database.getReference("message");
@@ -31,7 +36,6 @@ public class AddItemScreen extends AppCompatActivity
 
     Button push, back;
     String enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc;
-
     Contents contents; // For contents (and their variables) in the list
 
     @Override
@@ -43,7 +47,6 @@ public class AddItemScreen extends AppCompatActivity
         String folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
         String folderName = getIntent().getStringExtra("FolderName"); // Name passed from ImageViewHolder
         String folderFirebaseKey = getIntent().getStringExtra("FolderFirebaseKey"); // Key passed from ImageViewHolder
-        //int value4 = getIntent().getIntExtra("Value4", 30); // Goal passed from ImageViewHolder
         String userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // User ID
 
         myRef = FirebaseDatabase.getInstance().getReference(userFirebaseID + "/uploads");
@@ -58,6 +61,12 @@ public class AddItemScreen extends AppCompatActivity
         itemDesc = findViewById(R.id.et_itemDesc);
         push = findViewById(R.id.btn_push);
         back = findViewById(R.id.btn_back);
+
+        Spinner spinner = findViewById(R.id.spinner1);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tags, android.R.layout.simple_spinner_item); // ArrayAdapter for dropdown spinner list (POE T3)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
         // Set image and text for folder header
         mTextFolder.setText(folderName);
@@ -119,5 +128,16 @@ public class AddItemScreen extends AppCompatActivity
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l)
+    {
+        String text = adapterView.getItemAtPosition(position).toString(); // Take item at this pos, turn into string, save as text variable
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView)
+    {
     }
 }

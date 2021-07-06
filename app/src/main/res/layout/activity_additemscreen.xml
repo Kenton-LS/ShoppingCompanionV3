@@ -41,6 +41,11 @@
             android:hint="New item's quantity"
             android:inputType="textPersonName" />
 
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="54dp" />
+
         <EditText
             android:id="@+id/et_itemDate"
             android:layout_width="match_parent"

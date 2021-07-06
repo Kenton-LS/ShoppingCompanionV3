@@ -25,6 +25,7 @@ public class StatisticScreen extends AppCompatActivity
     Button btnBarChart;
     Button btnPieChart;
     Button btnRadarChart;
+    Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,6 +44,7 @@ public class StatisticScreen extends AppCompatActivity
         btnBarChart = findViewById(R.id.ButtonBarChart);
         btnPieChart = findViewById(R.id.ButtonPieChart);
         btnRadarChart = findViewById(R.id.ButtonRadarChart);
+        btnBack = findViewById(R.id.ButtonBack);
 
         btnBarChart.setOnClickListener(new View.OnClickListener()
         {
@@ -75,6 +77,18 @@ public class StatisticScreen extends AppCompatActivity
             {
                 //startActivity(new Intent(getApplicationContext(), ChartRadarScreen.class));
                 Intent i = new Intent(getApplicationContext(), ChartRadarScreen.class);
+                sendDetails(i);
+                startActivity(i);
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                //startActivity(new Intent(getApplicationContext(), ChartRadarScreen.class));
+                Intent i = new Intent(getApplicationContext(), AllFolderScreen.class);
                 sendDetails(i);
                 startActivity(i);
             }
