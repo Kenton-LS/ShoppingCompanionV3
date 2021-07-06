@@ -38,7 +38,7 @@ public class Login extends AppCompatActivity
         mPassword = findViewById(R.id.password);
         fAuth = FirebaseAuth.getInstance();
         mLoginBtn = findViewById(R.id.img_continueLogin);
-        mCreateBtn = findViewById(R.id.createNewText);
+        mCreateBtn = findViewById(R.id.txtCreate);
 
         mLoginBtn.setOnClickListener(new View.OnClickListener()
         {
