@@ -45,6 +45,7 @@ public class InFolderScreen extends AppCompatActivity
     Contents contents; // For contents (and their variables) in the list
     ListView contentsListView; // For list
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -64,6 +65,9 @@ public class InFolderScreen extends AppCompatActivity
         mImageFolder = findViewById(R.id.image_view_contents);
         mTextFolder = findViewById(R.id.text_view_contents);
         contentsListView = findViewById(R.id.lv_contents);
+
+        contentsListView.setItemsCanFocus(false);
+        contentsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         push = findViewById(R.id.btn_push);
         confirm = findViewById(R.id.btn_confirm);
