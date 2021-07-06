@@ -21,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -74,7 +73,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
         back = findViewById(R.id.btn_back);
 
         // For dropdown menu
-        Spinner spinner = findViewById(R.id.spinner1);
+        Spinner spinner = findViewById(R.id.sp_itemTag);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tags, android.R.layout.simple_spinner_item); // ArrayAdapter for dropdown spinner list (POE T3)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
