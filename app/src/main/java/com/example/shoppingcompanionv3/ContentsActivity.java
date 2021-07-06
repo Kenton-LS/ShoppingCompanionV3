@@ -39,7 +39,7 @@ public class ContentsActivity extends AppCompatActivity
     int index = 0; // Number of children items in this folder
 
     Button push;
-    Button confirm; // For size / goal
+    ImageView confirm; // For size / goal
     private EditText mEditTextSize;
 
     List<String> contentList; // For FireBase list of contents
@@ -69,7 +69,7 @@ public class ContentsActivity extends AppCompatActivity
         contentsListView = findViewById(R.id.lv_contents);
 
         push = findViewById(R.id.btn_push);
-        confirm = findViewById(R.id.btn_confirm);
+        confirm = findViewById(R.id.img_confirmSize);
         mEditTextSize = findViewById(R.id.et_size);
 
         // Set image and text for folder header
