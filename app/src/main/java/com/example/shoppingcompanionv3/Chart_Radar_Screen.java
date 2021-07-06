@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ChartRadarScreen extends AppCompatActivity
+public class Chart_Radar_Screen extends AppCompatActivity
 {
     //------------------------------------References------------------------------------------//
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -31,7 +31,7 @@ public class ChartRadarScreen extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chartradar);
+        setContentView(R.layout.activity_chart_radar);
 
         //------------------------------------References------------------------------------------//
         folderImageUrl = getIntent().getStringExtra("FolderImageUrl");

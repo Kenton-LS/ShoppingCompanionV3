@@ -6,12 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class StatisticScreen extends AppCompatActivity
+public class Statistic_Screen extends AppCompatActivity
 {
     //------------------------------------References------------------------------------------//
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -31,7 +30,7 @@ public class StatisticScreen extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_statisticscreen);
+        setContentView(R.layout.activity_statistic_screen);
 
         //------------------------------------References------------------------------------------//
         folderImageUrl = getIntent().getStringExtra("FolderImageUrl");
@@ -52,7 +51,7 @@ public class StatisticScreen extends AppCompatActivity
             public void onClick(View view)
             {
                 //startActivity(new Intent(getApplicationContext(), ChartBarScreen.class));
-                Intent i = new Intent(getApplicationContext(), ChartBarScreen.class);
+                Intent i = new Intent(getApplicationContext(), Chart_Bar_Screen.class);
                 sendDetails(i);
                 startActivity(i);
             }
@@ -64,7 +63,7 @@ public class StatisticScreen extends AppCompatActivity
             public void onClick(View view)
             {
                 //startActivity(new Intent(getApplicationContext(), ChartPieScreen.class));
-                Intent i = new Intent(getApplicationContext(), ChartPieScreen.class);
+                Intent i = new Intent(getApplicationContext(), Chart_Pie_Screen.class);
                 sendDetails(i);
                 startActivity(i);
             }
@@ -76,7 +75,7 @@ public class StatisticScreen extends AppCompatActivity
             public void onClick(View view)
             {
                 //startActivity(new Intent(getApplicationContext(), ChartRadarScreen.class));
-                Intent i = new Intent(getApplicationContext(), ChartRadarScreen.class);
+                Intent i = new Intent(getApplicationContext(), Chart_Radar_Screen.class);
                 sendDetails(i);
                 startActivity(i);
             }
@@ -88,7 +87,7 @@ public class StatisticScreen extends AppCompatActivity
             public void onClick(View view)
             {
                 //startActivity(new Intent(getApplicationContext(), ChartRadarScreen.class));
-                Intent i = new Intent(getApplicationContext(), AllFolderScreen.class);
+                Intent i = new Intent(getApplicationContext(), All_Folder_Screen.class);
                 sendDetails(i);
                 startActivity(i);
             }

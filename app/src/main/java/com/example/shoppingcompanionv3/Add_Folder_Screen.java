@@ -48,7 +48,7 @@ import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
-public class AddFolderScreen extends AppCompatActivity
+public class Add_Folder_Screen extends AppCompatActivity
 {
     private static final int PICK_IMAGE_REQUEST = 1; // Constant used to identify image request
     private static final int TAKE_IMAGE_REQUEST = 100; // Constant used to identify image request
@@ -73,7 +73,7 @@ public class AddFolderScreen extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mainscreen);
+        setContentView(R.layout.activity_main_screen);
 
         userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // Get the current user's ID
 
@@ -107,7 +107,7 @@ public class AddFolderScreen extends AppCompatActivity
                 if (mUploadTask != null && mUploadTask.isInProgress())
                 {
                     // Don't upload, rather show toast message
-                    Toast.makeText(AddFolderScreen.this, "Currently uploading something else", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Add_Folder_Screen.this, "Currently uploading something else", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -226,7 +226,7 @@ public class AddFolderScreen extends AppCompatActivity
                             String uploadId = mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upload); // Take unique id and set data to uploadfile (which contains upload name and url)*/
 
-                            Toast.makeText(AddFolderScreen.this, "Upload success", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Add_Folder_Screen.this, "Upload success", Toast.LENGTH_LONG).show();
                             Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
                             while (!urlTask.isSuccessful());
                             Uri downloadUrl = urlTask.getResult();
@@ -243,7 +243,7 @@ public class AddFolderScreen extends AppCompatActivity
                         public void onFailure(@NonNull Exception e)
                         {
                             // Show error as toast message
-                            Toast.makeText(AddFolderScreen.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Add_Folder_Screen.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>()
@@ -266,7 +266,7 @@ public class AddFolderScreen extends AppCompatActivity
 
     private void openImagesActivity() // On clicking ShowUploads button, displays all folders in Images_View class
     {
-        Intent i = new Intent(getApplicationContext(), AllFolderScreen.class);
+        Intent i = new Intent(getApplicationContext(), All_Folder_Screen.class);
         i.putExtra("UserFirebaseID", userFirebaseID); // Send through the User's ID to the MainActivity
         startActivity(i);
     }

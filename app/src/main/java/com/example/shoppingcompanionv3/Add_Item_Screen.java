@@ -21,11 +21,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.Calendar;
 
-public class AddItemScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener
+public class Add_Item_Screen extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
     //------------------------------------References------------------------------------------//
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -50,7 +49,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_additemscreen);
+        setContentView(R.layout.activity_add_item_screen);
 
         //------------------------------------References------------------------------------------//
         folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
@@ -123,7 +122,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
                 contents = new Contents(enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc, enteredDropdownTag);
                 //myRef.child(String.valueOf(i)).setValue(contents); OLD
 
-                Toast.makeText(AddItemScreen.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Add_Item_Screen.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
                 myRef.child(folderFirebaseKey).child("contents").child(String.valueOf(index)).setValue(contents);
 
                 itemName.setText(""); itemQty.setText(""); itemDate.setText(currentDate); itemDesc.setText("");
@@ -135,7 +134,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View v)
             {
-                Intent i = new Intent(getApplicationContext(), InFolderScreen.class);
+                Intent i = new Intent(getApplicationContext(), In_Folder_Screen.class);
                 i.putExtra("FolderImageUrl", folderImageUrl); // Send through the URL for the image we want to display
                 i.putExtra("FolderName", folderName); // Send through the name for the image we want to display
                 i.putExtra("FolderFirebaseKey", folderFirebaseKey); // Key

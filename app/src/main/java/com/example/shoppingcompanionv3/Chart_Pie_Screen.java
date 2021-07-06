@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ChartPieScreen extends AppCompatActivity
+public class Chart_Pie_Screen extends AppCompatActivity
 {
     //------------------------------------References------------------------------------------//
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -30,7 +30,7 @@ public class ChartPieScreen extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chartpie);
+        setContentView(R.layout.activity_chart_pie);
 
         //------------------------------------References------------------------------------------//
         folderImageUrl = getIntent().getStringExtra("FolderImageUrl");

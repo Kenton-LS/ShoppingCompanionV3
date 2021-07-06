@@ -25,7 +25,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InFolderScreen extends AppCompatActivity
+public class In_Folder_Screen extends AppCompatActivity
 {
     //------------------------------------References------------------------------------------//
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -54,7 +54,7 @@ public class InFolderScreen extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_infolderscreen);
+        setContentView(R.layout.activity_in_folder_screen);
 
         //------------------------------------References------------------------------------------//
         folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
@@ -64,7 +64,7 @@ public class InFolderScreen extends AppCompatActivity
         myRef = FirebaseDatabase.getInstance().getReference(userFirebaseID + "/uploads");
         //----------------------------------------------------------------------------------------//
 
-        Toast.makeText(InFolderScreen.this,  "Name: " + folderName + "\nKey: " + folderFirebaseKey + "\nLink: " + folderImageUrl, Toast.LENGTH_SHORT).show();
+        Toast.makeText(In_Folder_Screen.this,  "Name: " + folderName + "\nKey: " + folderFirebaseKey + "\nLink: " + folderImageUrl, Toast.LENGTH_SHORT).show();
 
         // Declarations
         mImageFolder = findViewById(R.id.image_view_contents);
@@ -107,7 +107,7 @@ public class InFolderScreen extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent i = new Intent(getApplicationContext(), AddItemScreen.class);
+                Intent i = new Intent(getApplicationContext(), Add_Item_Screen.class);
                 i.putExtra("FolderImageUrl", folderImageUrl); // Send through the URL for the image we want to display
                 i.putExtra("FolderName", folderName); // Send through the name for the image we want to display
                 i.putExtra("FolderFirebaseKey", folderFirebaseKey);
@@ -172,14 +172,14 @@ public class InFolderScreen extends AppCompatActivity
                 }
 
                 // Pass in current context, layout, and orderList
-                adapter = new ArrayAdapter(InFolderScreen.this, android.R.layout.simple_list_item_1, contentList);
+                adapter = new ArrayAdapter(In_Folder_Screen.this, android.R.layout.simple_list_item_1, contentList);
                 contentsListView.setAdapter(adapter); // Takes all the data and displays it into the list
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error)
             {
-                Toast.makeText(InFolderScreen.this, error.getMessage(), Toast.LENGTH_SHORT);
+                Toast.makeText(In_Folder_Screen.this, error.getMessage(), Toast.LENGTH_SHORT);
             }
         });
         // ---------------------------------------------------------------------------------------------------------------------------------------//

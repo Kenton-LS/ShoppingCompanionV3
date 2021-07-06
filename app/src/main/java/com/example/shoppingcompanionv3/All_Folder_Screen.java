@@ -24,10 +24,10 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.OnItemClickListener // Use interface created for options
+public class All_Folder_Screen extends AppCompatActivity implements Image_Adapter.OnItemClickListener // Use interface created for options
 {
     private RecyclerView mRecyclerView;
-    private ImageAdapter mAdapter;
+    private Image_Adapter mAdapter;
 
     private ProgressBar mProgressCircle; // Set default images before loading actual images
 
@@ -45,7 +45,7 @@ public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.O
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_allfolderscreen);
+        setContentView(R.layout.activity_all_folder_screen);
 
         userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // Get the current user's ID
 
@@ -59,9 +59,9 @@ public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.O
 
         mUploads = new ArrayList<>(); // Initialize uploads as arraylist
 
-        mAdapter = new ImageAdapter(AllFolderScreen.this, mUploads);
+        mAdapter = new Image_Adapter(All_Folder_Screen.this, mUploads);
         mRecyclerView.setAdapter(mAdapter); // Where the MAGIC happens
-        mAdapter.setOnItemClickListener(AllFolderScreen.this); // Method to parse the listener
+        mAdapter.setOnItemClickListener(All_Folder_Screen.this); // Method to parse the listener
 
         mStorage = FirebaseStorage.getInstance();
 
@@ -92,7 +92,7 @@ public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.O
             public void onCancelled(@NonNull DatabaseError error)
             {
                 // Call if error -> eg no permission to read data from DataBase
-                Toast.makeText(AllFolderScreen.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(All_Folder_Screen.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 mProgressCircle.setVisibility(View.INVISIBLE); // Hide default image loader
             }
         });
@@ -103,7 +103,7 @@ public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.O
             @Override
             public void onClick(View v)
             {
-                Intent i = new Intent(getApplicationContext(), AddFolderScreen.class);
+                Intent i = new Intent(getApplicationContext(), Add_Folder_Screen.class);
                 i.putExtra("UserFirebaseID", userFirebaseID); // Return this user's ID
                 startActivity(i);
             }
@@ -120,7 +120,7 @@ public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.O
         Upload selectedItem = mUploads.get(position); // Get upload item at click position
         String selectedKey = selectedItem.getKey();
 
-        Intent i = new Intent(getApplicationContext(), InFolderScreen.class);
+        Intent i = new Intent(getApplicationContext(), In_Folder_Screen.class);
         i.putExtra("FolderImageUrl", selectedItem.getImageUrl()); // Send through the URL for the image we want to display
         i.putExtra("FolderName", selectedItem.getName()); // Send through the name for the image we want to display
         i.putExtra("FolderFirebaseKey", selectedItem.getKey());
@@ -140,7 +140,7 @@ public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.O
         Upload selectedItem = mUploads.get(position);
         String selectedKey = selectedItem.getKey();
 
-        Intent i = new Intent(getApplicationContext(), StatisticScreen.class);
+        Intent i = new Intent(getApplicationContext(), Statistic_Screen.class);
         i.putExtra("FolderImageUrl", selectedItem.getImageUrl());
         i.putExtra("FolderName", selectedItem.getName());
         i.putExtra("FolderFirebaseKey", selectedItem.getKey());
@@ -166,7 +166,7 @@ public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.O
                 // Only delete item from database if it was successfully deleted from storage
                 // Otherwise there could be items in FireBase that don't exist in Android Storage
                 mDatabaseRef.child(selectedKey).removeValue();
-                Toast.makeText(AllFolderScreen.this, "Folder deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(All_Folder_Screen.this, "Folder deleted", Toast.LENGTH_SHORT).show();
             }
         });
     }

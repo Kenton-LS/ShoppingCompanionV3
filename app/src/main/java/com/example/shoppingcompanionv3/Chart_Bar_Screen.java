@@ -11,12 +11,11 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ChartBarScreen extends AppCompatActivity
+public class Chart_Bar_Screen extends AppCompatActivity
 {
     //------------------------------------References------------------------------------------//
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -31,7 +30,7 @@ public class ChartBarScreen extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chartbar);
+        setContentView(R.layout.activity_chart_bar);
 
         //------------------------------------References------------------------------------------//
         folderImageUrl = getIntent().getStringExtra("FolderImageUrl");
