@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
+import java.text.DateFormat;
+import java.util.Calendar;
 
 public class AddItemScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
@@ -76,8 +78,13 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
+        // For automatic calender in date acquired textbox
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
+
         // Set image and text for folder header
         mTextFolder.setText(folderName);
+        itemDate.setText(currentDate);
         Picasso.get().load(folderImageUrl).placeholder(R.mipmap.ic_launcher) // Mipmap creates default placeholder image while real images load
                 .fit().centerCrop().into(mImageFolder);
 
@@ -119,7 +126,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
                 Toast.makeText(AddItemScreen.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
                 myRef.child(folderFirebaseKey).child("contents").child(String.valueOf(index)).setValue(contents);
 
-                itemName.setText(""); itemQty.setText(""); itemDate.setText(""); itemDesc.setText("");
+                itemName.setText(""); itemQty.setText(""); itemDate.setText(currentDate); itemDesc.setText("");
             }
         });
 
