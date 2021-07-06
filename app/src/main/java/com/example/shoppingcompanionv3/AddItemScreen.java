@@ -32,6 +32,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
     String folderName;
     String folderFirebaseKey;
     String userFirebaseID;
+    String chosenDropdownTag;
     //----------------------------------------------------------------------------------------//
 
     private ImageView mImageFolder;
@@ -40,7 +41,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
     int index = 0; // For determining number of items in FireBase
 
     Button push, back;
-    String enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc;
+    String enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc, enteredDropdownTag;
     Contents contents; // For contents (and their variables) in the list
 
     @Override
@@ -110,8 +111,9 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
                 enteredItemQty = itemQty.getText().toString().trim();
                 enteredItemDate = itemDate.getText().toString().trim();
                 enteredItemDesc = itemDesc.getText().toString().trim();
+                enteredDropdownTag = chosenDropdownTag;
 
-                contents = new Contents(enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc);
+                contents = new Contents(enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc, enteredDropdownTag);
                 //myRef.child(String.valueOf(i)).setValue(contents); OLD
 
                 Toast.makeText(AddItemScreen.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
@@ -141,7 +143,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l)
     {
-        String chosenDropdownTag = adapterView.getItemAtPosition(position).toString(); // Take item at this pos, turn into string, save as text variable
+        chosenDropdownTag = adapterView.getItemAtPosition(position).toString(); // Take item at this pos, turn into string, save as text variable
         Toast.makeText(adapterView.getContext(), chosenDropdownTag, Toast.LENGTH_SHORT).show();
     }
 
