@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,8 @@ import java.util.Map;
 public class Register extends AppCompatActivity {
 
     EditText mFullName, mEmail, mPassword;
-    Button mRegisterBtn;
+    ImageView mRegisterBtn;
+    ImageView mBackBtn2;
     TextView mLoginBtn;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -42,7 +44,8 @@ public class Register extends AppCompatActivity {
         mFullName = findViewById(R.id.fullName);
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
-        mRegisterBtn = findViewById(R.id.createBtn);
+        mRegisterBtn = findViewById(R.id.img_continueCreate);
+        mBackBtn2 = findViewById(R.id.img_back_two);
         mLoginBtn = findViewById(R.id.loginText);
 
         fAuth = FirebaseAuth.getInstance();
@@ -109,6 +112,13 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), Login.class));
+            }
+        });
+
+        mBackBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             }
         });
     }
