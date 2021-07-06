@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".MainScreen">
+    tools:context=".AddFolderScreen">
 
     <Button
         android:id="@+id/button_choose_image"
@@ -55,7 +55,7 @@
         android:layout_marginStart="25dp"
         android:layout_toEndOf="@+id/button_upload"
         android:gravity="center"
-        android:text="Show Uploads"
+        android:text="Show My Lists"
         android:textSize="16sp" />
 
     <Button

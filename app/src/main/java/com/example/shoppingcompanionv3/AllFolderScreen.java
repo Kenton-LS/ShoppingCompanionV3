@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -36,6 +37,8 @@ public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.O
     private FirebaseStorage mStorage; // Used to get reference to images in FireBase storage
     private ValueEventListener mDBListener;
 
+    Button addNewFolder;
+
     String userFirebaseID; // For parsing the current user's ID into the firebase to make sure we only retrieve THIS user's data
 
     @Override
@@ -49,6 +52,8 @@ public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.O
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true); // Increase performance of recycler view
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        addNewFolder = findViewById(R.id.btn_addNewFolder);
 
         mProgressCircle = findViewById(R.id.progress_circle); // For loading default images
 
@@ -89,6 +94,18 @@ public class AllFolderScreen extends AppCompatActivity implements ImageAdapter.O
                 // Call if error -> eg no permission to read data from DataBase
                 Toast.makeText(AllFolderScreen.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 mProgressCircle.setVisibility(View.INVISIBLE); // Hide default image loader
+            }
+        });
+
+        // AddNewFolder button on click
+        addNewFolder.setOnClickListener(new View.OnClickListener() // Go back to ContentsActivity.java
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent i = new Intent(getApplicationContext(), AddFolderScreen.class);
+                i.putExtra("UserFirebaseID", userFirebaseID); // Return this user's ID
+                startActivity(i);
             }
         });
     }
