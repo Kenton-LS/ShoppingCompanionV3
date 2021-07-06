@@ -31,12 +31,13 @@ public class AddItemActivity extends AppCompatActivity
     //DatabaseReference myRef = database.getReference("message");
     private DatabaseReference myRef;
 
+
     private ImageView mImageFolder;
     private TextView mTextFolder;
     EditText itemName, itemQty, itemDate, itemDesc; // For adding a new item -> the name and quantity
     int index = 0; // For determining number of items in FireBase
 
-    Button push, back;
+    private ImageView push, back;
     String enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc;
 
     Contents contents; // For contents (and their variables) in the list
@@ -63,8 +64,8 @@ public class AddItemActivity extends AppCompatActivity
         itemQty = findViewById(R.id.et_itemQty);
         itemDate = findViewById(R.id.et_itemDate);
         itemDesc = findViewById(R.id.et_itemDesc);
-        push = findViewById(R.id.btn_push);
-        back = findViewById(R.id.btn_back);
+        push = findViewById(R.id.img_confirmItem);
+        back = findViewById(R.id.img_back_3);
 
         // Set image and text for folder header
         mTextFolder.setText(value2);
