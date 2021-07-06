@@ -83,17 +83,30 @@
             android:hint="New item's description"
             android:inputType="textPersonName" />
 
-        <ImageView
-            android:id="@+id/img_confirmItem"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            app:srcCompat="@drawable/confirm_one" />
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/img_back_3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/back_one" />
+            <ImageView
+                android:id="@+id/img_back_3"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="51dp"
+                app:srcCompat="@drawable/back_one" />
+
+            <ImageView
+                android:id="@+id/img_confirmItem"
+                android:layout_width="195dp"
+                android:layout_height="48dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="17dp"
+                android:layout_marginBottom="50dp"
+                app:srcCompat="@drawable/confirm_one" />
+        </RelativeLayout>
 
     </LinearLayout>
 
