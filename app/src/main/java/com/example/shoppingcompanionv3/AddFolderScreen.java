@@ -48,7 +48,7 @@ import java.util.Date;
 
 import static android.content.ContentValues.TAG;
 
-public class MainScreen extends AppCompatActivity
+public class AddFolderScreen extends AppCompatActivity
 {
     private static final int PICK_IMAGE_REQUEST = 1; // Constant used to identify image request
     private static final int TAKE_IMAGE_REQUEST = 100; // Constant used to identify image request
@@ -75,7 +75,7 @@ public class MainScreen extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainscreen);
 
-        userFirebaseID = getIntent().getStringExtra("ValueUID"); // Get the current user's ID
+        userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // Get the current user's ID
 
         // Assigning variables
         mButtonChooseImage = findViewById(R.id.button_choose_image);
@@ -107,7 +107,7 @@ public class MainScreen extends AppCompatActivity
                 if (mUploadTask != null && mUploadTask.isInProgress())
                 {
                     // Don't upload, rather show toast message
-                    Toast.makeText(MainScreen.this, "Currently uploading something else", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddFolderScreen.this, "Currently uploading something else", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -226,7 +226,7 @@ public class MainScreen extends AppCompatActivity
                             String uploadId = mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upload); // Take unique id and set data to uploadfile (which contains upload name and url)*/
 
-                            Toast.makeText(MainScreen.this, "Upload success", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddFolderScreen.this, "Upload success", Toast.LENGTH_LONG).show();
                             Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
                             while (!urlTask.isSuccessful());
                             Uri downloadUrl = urlTask.getResult();
@@ -243,7 +243,7 @@ public class MainScreen extends AppCompatActivity
                         public void onFailure(@NonNull Exception e)
                         {
                             // Show error as toast message
-                            Toast.makeText(MainScreen.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddFolderScreen.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>()

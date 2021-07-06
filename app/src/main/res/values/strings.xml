@@ -2,11 +2,39 @@
     <string name="app_name">ShoppingCompanionV3</string>
     <string name="take_picture">Take Picture</string>
 
-    <string-array name= "Food_Groups">
-        <item>Fruits</item>
-        <item>Vegetables</item>
-        <item>Grains</item>
-        <item>Protein</item>
+    <string-array name="tags">
+        <item>Alcohol</item>
+        <item>Carbs</item>
         <item>Dairy</item>
+        <item>Drinks</item>
+        <item>Fruit</item>
+        <item>Grains</item>
+        <item>Oils</item>
+        <item>Protein</item>
+        <item>Sugary</item>
+        <item>Takeaway</item>
+        <item>Veg</item>
+        <item>Other</item>
+
+        <item>Appliances</item>
+        <item>Beauty</item>
+        <item>Books</item>
+        <item>DIY</item>
+        <item>Electronics</item>
+        <item>Fashion</item>
+        <item>Furniture</item>
+        <item>Games</item>
+        <item>Hobby</item>
+        <item>Jewelry</item>
+        <item>Medicines</item>
+        <item>Music</item>
+        <item>Software</item>
+        <item>Sport</item>
+        <item>Stationery</item>
+        <item>Tickets</item>
+        <item>Toys</item>
+        <item>Travels</item>
+        <item>Vehicles</item>
+        <item>Watches</item>
     </string-array>
 </resources>

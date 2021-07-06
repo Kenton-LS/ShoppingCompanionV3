@@ -78,8 +78,8 @@ public class Login extends AppCompatActivity
                             {
                                 public void run()
                                 {
-                                    Intent i = new Intent(getApplicationContext(), MainScreen.class);
-                                    i.putExtra("ValueUID", UserID); // Send through the User's ID to the MainActivity
+                                    Intent i = new Intent(getApplicationContext(), AllFolderScreen.class);
+                                    i.putExtra("UserFirebaseID", UserID); // Send through the User's ID to the MainActivity
                                     startActivity(i);
                                 }
                             }, 500); // End delay
