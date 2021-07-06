@@ -27,9 +27,14 @@ import java.util.List;
 
 public class InFolderScreen extends AppCompatActivity
 {
-    FirebaseDatabase database = FirebaseDatabase.getInstance(); // FireBase Reference
-    //DatabaseReference myRef = database.getReference("message");
+    //------------------------------------References------------------------------------------//
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef;
+    String folderImageUrl;
+    String folderName;
+    String folderFirebaseKey;
+    String userFirebaseID;
+    //----------------------------------------------------------------------------------------//
 
     private ImageView mImageFolder;
     private TextView mTextFolder;
@@ -51,14 +56,15 @@ public class InFolderScreen extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infolderscreen);
 
-        String folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
-        String folderName = getIntent().getStringExtra("FolderName"); // Name passed from ImageViewHolder
-        String folderFirebaseKey = getIntent().getStringExtra("FolderFirebaseKey"); // Key passed from ImageViewHolder
-        //int value4 = getIntent().getIntExtra("Value4", 30); // Goal passed from ImageViewHolder
-        String userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // Get the current user's ID
-        Toast.makeText(InFolderScreen.this,  "Name: " + folderName + "\nKey: " + folderFirebaseKey + "\nLink: " + folderImageUrl, Toast.LENGTH_SHORT).show();
-
+        //------------------------------------References------------------------------------------//
+        folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
+        folderName = getIntent().getStringExtra("FolderName"); // Name passed from ImageViewHolder
+        folderFirebaseKey = getIntent().getStringExtra("FolderFirebaseKey"); // Key passed from ImageViewHolder
+        userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // Get the current user's ID
         myRef = FirebaseDatabase.getInstance().getReference(userFirebaseID + "/uploads");
+        //----------------------------------------------------------------------------------------//
+
+        Toast.makeText(InFolderScreen.this,  "Name: " + folderName + "\nKey: " + folderFirebaseKey + "\nLink: " + folderImageUrl, Toast.LENGTH_SHORT).show();
 
         // Declarations
         mImageFolder = findViewById(R.id.image_view_contents);

@@ -25,9 +25,14 @@ import java.lang.reflect.Array;
 
 public class AddItemScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
-    FirebaseDatabase database = FirebaseDatabase.getInstance(); // FireBase Reference
-    //DatabaseReference myRef = database.getReference("message");
+    //------------------------------------References------------------------------------------//
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef;
+    String folderImageUrl;
+    String folderName;
+    String folderFirebaseKey;
+    String userFirebaseID;
+    //----------------------------------------------------------------------------------------//
 
     private ImageView mImageFolder;
     private TextView mTextFolder;
@@ -44,12 +49,13 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_additemscreen);
 
-        String folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
-        String folderName = getIntent().getStringExtra("FolderName"); // Name passed from ImageViewHolder
-        String folderFirebaseKey = getIntent().getStringExtra("FolderFirebaseKey"); // Key passed from ImageViewHolder
-        String userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // User ID
-
+        //------------------------------------References------------------------------------------//
+        folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
+        folderName = getIntent().getStringExtra("FolderName"); // Name passed from ImageViewHolder
+        folderFirebaseKey = getIntent().getStringExtra("FolderFirebaseKey"); // Key passed from ImageViewHolder
+        userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // User ID
         myRef = FirebaseDatabase.getInstance().getReference(userFirebaseID + "/uploads");
+        //----------------------------------------------------------------------------------------//
 
         // Declarations
         mImageFolder = findViewById(R.id.image_view_contents4);
@@ -62,6 +68,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
         push = findViewById(R.id.btn_push);
         back = findViewById(R.id.btn_back);
 
+        // For dropdown menu
         Spinner spinner = findViewById(R.id.spinner1);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tags, android.R.layout.simple_spinner_item); // ArrayAdapter for dropdown spinner list (POE T3)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -93,6 +100,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
             public void onCancelled(DatabaseError databaseError) { }
         });
 
+        // Save new item to Firebase
         push.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -122,7 +130,6 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
                 i.putExtra("FolderImageUrl", folderImageUrl); // Send through the URL for the image we want to display
                 i.putExtra("FolderName", folderName); // Send through the name for the image we want to display
                 i.putExtra("FolderFirebaseKey", folderFirebaseKey); // Key
-                //i.putExtra("Value4", value4); // Goal
                 i.putExtra("UserFirebaseID", userFirebaseID); // Return this user's ID
 
                 startActivity(i);
@@ -130,10 +137,12 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
         });
     }
 
+    // Dropdown menu
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l)
     {
-        String text = adapterView.getItemAtPosition(position).toString(); // Take item at this pos, turn into string, save as text variable
+        String chosenDropdownTag = adapterView.getItemAtPosition(position).toString(); // Take item at this pos, turn into string, save as text variable
+        Toast.makeText(adapterView.getContext(), chosenDropdownTag, Toast.LENGTH_SHORT).show();
     }
 
     @Override
