@@ -4,10 +4,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -58,22 +61,22 @@ public class Chart_Pie_Screen extends AppCompatActivity
         //----------------------------------------------------------------------------------------//
 
         PieChart pieChart = findViewById(R.id.pieChart);
+        ArrayList<PieEntry> categories = new ArrayList<PieEntry>();
 
-        ArrayList<PieEntry> visitors = new ArrayList<PieEntry>();
-        visitors.add(new PieEntry(counterAlcohol, 2016));
-        visitors.add(new PieEntry(counterCarbs, 2017));
-        visitors.add(new PieEntry(counterDairy, 2018));
-        visitors.add(new PieEntry(counterDrinks, 2019));
-        visitors.add(new PieEntry(counterFruit, 2020));
-        visitors.add(new PieEntry(counterGrains, 2021));
-        visitors.add(new PieEntry(counterOils, 2022));
-        visitors.add(new PieEntry(counterProtein, 2023));
-        visitors.add(new PieEntry(counterSugary, 2024));
-        visitors.add(new PieEntry(counterTakeaway, 2025));
-        visitors.add(new PieEntry(counterVeg, 2026));
-        visitors.add(new PieEntry(counterOther, 2027));
+        categories.add(new PieEntry(counterAlcohol, "Alcohol"));
+        categories.add(new PieEntry(counterProtein, "Protein"));
+        categories.add(new PieEntry(counterGrains, "Grains"));
+        categories.add(new PieEntry(counterCarbs, "Carbs"));
+        categories.add(new PieEntry(counterDrinks, "Drinks"));
+        categories.add(new PieEntry(counterFruit, "Fruit"));
+        categories.add(new PieEntry(counterOils, "Oils"));
+        categories.add(new PieEntry(counterSugary, "Sugary"));
+        categories.add(new PieEntry(counterTakeaway, "Takeaway"));
+        categories.add(new PieEntry(counterDairy, "Dairy"));
+        categories.add(new PieEntry(counterOther, "Other"));
+        categories.add(new PieEntry(counterVeg, "Veg"));
 
-        PieDataSet pieDataSet = new PieDataSet(visitors, "Categories");
+        PieDataSet pieDataSet = new PieDataSet(categories, "Amount");
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueTextSize(16f);
