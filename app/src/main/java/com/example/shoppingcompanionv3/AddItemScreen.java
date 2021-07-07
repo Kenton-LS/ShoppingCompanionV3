@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.util.Calendar;
 
@@ -34,6 +34,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
     String folderFirebaseKey;
     String userFirebaseID;
     String chosenDropdownTag;
+    Boolean itemCheck;
     //----------------------------------------------------------------------------------------//
 
     private ImageView mImageFolder;
@@ -120,8 +121,9 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
                 enteredItemDate = itemDate.getText().toString().trim();
                 enteredItemDesc = itemDesc.getText().toString().trim();
                 enteredDropdownTag = chosenDropdownTag;
+                itemCheck = false;
 
-                contents = new Contents(enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc, enteredDropdownTag);
+                contents = new Contents(enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc, enteredDropdownTag, itemCheck);
                 //myRef.child(String.valueOf(i)).setValue(contents); OLD
 
                 Toast.makeText(AddItemScreen.this, "COUNT " + index, Toast.LENGTH_SHORT).show();

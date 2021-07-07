@@ -3,18 +3,20 @@ package com.example.shoppingcompanionv3;
 public class Contents
 {
     String product, qty, date, desc, tag;
+    Boolean checked;
 
     public Contents()
     {
     }
 
-    public Contents(String product, String qty, String date, String desc, String tag)
+    public Contents(String product, String qty, String date, String desc, String tag, Boolean checked)
     {
         this.product = product;
         this.qty = qty;
         this.date = date;
         this.desc = desc;
         this.tag = tag;
+        this.checked = checked;
     }
 
     public String getProduct()
@@ -37,6 +39,7 @@ public class Contents
     {
         return tag;
     }
+    public Boolean getChecked(){return checked;}
 
     public void setProduct(String product)
     {
@@ -58,6 +61,7 @@ public class Contents
     {
         this.tag = tag;
     }
+    public void setChecked(Boolean check){this.checked = check;}
 
     public String ToString() { return "Item Name: " + product + "\n" + "Qty: " + qty; }
 }
