@@ -88,7 +88,7 @@ public class Register extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(Register.this, "User Created.", Toast.LENGTH_SHORT).show();
-<<<<<<< HEAD
+
                             UserID = fAuth.getCurrentUser().getUid();
                             DocumentReference documentRef = fStore.collection("users").document(UserID);
                             Map<String, Object> user = new HashMap<>();
@@ -97,7 +97,7 @@ public class Register extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d("TAG", "Success: User Profile created for" + UserID);
-=======
+
                             String UserID = fAuth.getCurrentUser().getUid();
                             Toast.makeText(Register.this, "ID: " + UserID, Toast.LENGTH_SHORT).show();
 
@@ -109,7 +109,8 @@ public class Register extends AppCompatActivity {
                                     Intent i = new Intent(getApplicationContext(), All_Folder_Screen.class);
                                     i.putExtra("UserFirebaseID", UserID); // Send through the User's ID to the MainActivity
                                     startActivity(i);
->>>>>>> main
+
+
                                 }
                             });
                             startActivity(new Intent(getApplicationContext(), MainActivity.class));
