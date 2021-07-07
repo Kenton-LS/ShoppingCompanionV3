@@ -2,14 +2,17 @@ package com.example.shoppingcompanionv3;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,8 +39,8 @@ public class Chart_Bar_Screen extends AppCompatActivity
     Integer counterAlcohol = 0, counterCarbs = 0, counterDairy = 0, counterDrinks = 0, counterFruit = 0, counterGrains = 0,
             counterOils = 0, counterProtein = 0, counterSugary = 0, counterTakeaway = 0, counterVeg = 0, counterOther = 0;
 
-    List<String> contentList;
-    Contents contents; // For contents (and their variables) in the list
+    ArrayList<String> labelName;
+    ArrayList<Tag_Data> tagDataArrayList;
     //----------------------------------------------------------------------------------------//
 
     @Override
@@ -68,30 +71,89 @@ public class Chart_Bar_Screen extends AppCompatActivity
         //----------------------------------------------------------------------------------------//
 
         BarChart barChart = findViewById(R.id.barChart);
-        ArrayList<BarEntry> visitors = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> categories = new ArrayList<BarEntry>();
 
-        visitors.add(new BarEntry(2014, counterAlcohol));
-        visitors.add(new BarEntry(2015, counterCarbs));
-        visitors.add(new BarEntry(2016, counterDairy));
-        visitors.add(new BarEntry(2017, counterDrinks));
-        visitors.add(new BarEntry(2018, counterFruit));
-        visitors.add(new BarEntry(2019, counterGrains));
-        visitors.add(new BarEntry(2020, counterOils));
-        visitors.add(new BarEntry(2021, counterProtein));
-        visitors.add(new BarEntry(2022, counterSugary));
-        visitors.add(new BarEntry(2023, counterTakeaway));
-        visitors.add(new BarEntry(2024, counterVeg));
-        visitors.add(new BarEntry(2025, counterOther));
+        labelName  = new ArrayList<>();
+        tagDataArrayList = new ArrayList<>();
 
-        BarDataSet barDataSet = new BarDataSet(visitors, "Categories");
-        barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        fillTagDataArrayList();
+
+        for (int i =0; i < tagDataArrayList.size();i++)
+        {
+            String tag = tagDataArrayList.get(i).getTag();
+            int amount = tagDataArrayList.get(i).getAmount();
+            categories.add(new BarEntry(i,amount));
+            labelName.add(tag);
+        }
+
+        /*categories.add(new BarEntry(0, counterAlcohol));
+        categories.add(new BarEntry(1, counterCarbs));
+        categories.add(new BarEntry(2, counterDairy));
+        categories.add(new BarEntry(3, counterDrinks));
+        categories.add(new BarEntry(4, counterFruit));
+        categories.add(new BarEntry(5, counterGrains));
+        categories.add(new BarEntry(6, counterOils));
+        categories.add(new BarEntry(7, counterProtein));
+        categories.add(new BarEntry(8, counterSugary));
+        categories.add(new BarEntry(9, counterTakeaway));
+        categories.add(new BarEntry(10, counterVeg));
+        categories.add(new BarEntry(11, counterOther));
+
+        labelName.add("Alcohol");
+        labelName.add("Carbs");
+        labelName.add("Dairy");
+        labelName.add("Drinks");
+        labelName.add("Fruit");
+        labelName.add("Grains");
+        labelName.add("Oils");
+        labelName.add("Protein");
+        labelName.add("Sugary");
+        labelName.add("Takeaway");
+        labelName.add("Veg");
+        labelName.add("Other");*/
+
+        BarDataSet barDataSet = new BarDataSet(categories, "Amount");
+        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         barDataSet.setValueTextColor(Color.BLACK);
         barDataSet.setValueTextSize(16f);
+
+        // Extra addition
+        Description description = new Description();
+        description.setText("Tags");
+        barChart.setDescription(description);
+        //
 
         BarData barData = new BarData(barDataSet);
         barChart.setFitBars(true);
         barChart.setData(barData);
+
+        // Extra addition
+        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labelName));
+        barChart.getXAxis().setDrawGridLines(false);
+        barChart.getXAxis().setDrawAxisLine(false);
+        barChart.getXAxis().setGranularity(1f);
+        barChart.getXAxis().setLabelCount(labelName.size());
+        barChart.getXAxis().setLabelRotationAngle(270);
+        //
+
         barChart.getDescription().setText("Categories Bar Chart");
         barChart.animateY(2000);
+    }
+
+    private void fillTagDataArrayList()
+    {
+        tagDataArrayList.clear();
+        tagDataArrayList.add(new Tag_Data("Alcohol",counterAlcohol));
+        tagDataArrayList.add(new Tag_Data("Carbs",counterCarbs));
+        tagDataArrayList.add(new Tag_Data("Dairy",counterDairy));
+        tagDataArrayList.add(new Tag_Data("Drinks",counterDrinks));
+        tagDataArrayList.add(new Tag_Data("Fruit",counterFruit));
+        tagDataArrayList.add(new Tag_Data("Grains",counterGrains));
+        tagDataArrayList.add(new Tag_Data("Oils",counterOils));
+        tagDataArrayList.add(new Tag_Data("Protein",counterProtein));
+        tagDataArrayList.add(new Tag_Data("Sugary",counterSugary));
+        tagDataArrayList.add(new Tag_Data("Takeaway",counterTakeaway));
+        tagDataArrayList.add(new Tag_Data("Veg",counterVeg));
+        tagDataArrayList.add(new Tag_Data("Other",counterOther));
     }
 }
