@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -38,8 +37,7 @@ public class Statistic_Screen extends AppCompatActivity
     Button btnBarChart;
     Button btnPieChart;
     Button btnRadarChart;
-    ImageView btnBack;
-
+    Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,7 +57,7 @@ public class Statistic_Screen extends AppCompatActivity
         btnBarChart = findViewById(R.id.ButtonBarChart);
         btnPieChart = findViewById(R.id.ButtonPieChart);
         btnRadarChart = findViewById(R.id.ButtonRadarChart);
-        btnBack = findViewById(R.id.img_backBtn);
+        btnBack = findViewById(R.id.ButtonBack);
 
         btnBarChart.setOnClickListener(new View.OnClickListener() {
             @Override

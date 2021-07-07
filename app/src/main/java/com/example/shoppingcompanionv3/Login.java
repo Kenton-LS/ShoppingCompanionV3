@@ -23,7 +23,7 @@ public class Login extends AppCompatActivity
 {
     EditText mEmail, mPassword;
     ImageView mLoginBtn;
-
+    ImageView mBackBtn;
     TextView mCreateBtn;
     FirebaseAuth fAuth;
 
@@ -33,7 +33,7 @@ public class Login extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
+        mBackBtn = findViewById(R.id.img_back);
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         fAuth = FirebaseAuth.getInstance();
@@ -102,7 +102,5 @@ public class Login extends AppCompatActivity
                 startActivity(new Intent(getApplicationContext(), Register.class));
             }
         });
-
-
     }
 }

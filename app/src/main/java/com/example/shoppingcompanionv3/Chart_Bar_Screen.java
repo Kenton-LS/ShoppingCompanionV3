@@ -1,12 +1,9 @@
 package com.example.shoppingcompanionv3;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -38,8 +35,6 @@ public class Chart_Bar_Screen extends AppCompatActivity
     String folderName;
     String folderFirebaseKey;
     String userFirebaseID;
-
-    ImageView back;
 
     Integer counterAlcohol = 0, counterCarbs = 0, counterDairy = 0, counterDrinks = 0, counterFruit = 0, counterGrains = 0,
             counterOils = 0, counterProtein = 0, counterSugary = 0, counterTakeaway = 0, counterVeg = 0, counterOther = 0;
@@ -73,7 +68,6 @@ public class Chart_Bar_Screen extends AppCompatActivity
         counterTakeaway = getIntent().getIntExtra("counterTakeaway", 1);
         counterVeg = getIntent().getIntExtra("counterVeg", 1);
         counterOther = getIntent().getIntExtra("counterOther",1);
-        back = findViewById(R.id.img_backToSet);
         //----------------------------------------------------------------------------------------//
 
         BarChart barChart = findViewById(R.id.barChart);
@@ -118,13 +112,6 @@ public class Chart_Bar_Screen extends AppCompatActivity
 
         barChart.getDescription().setText("Categories Bar Chart");
         barChart.animateY(2000);
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Statistic_Screen.class));
-            }
-        });
     }
 
     private void fillTagDataArrayList()
@@ -143,6 +130,4 @@ public class Chart_Bar_Screen extends AppCompatActivity
         tagDataArrayList.add(new Tag_Data("Veg",counterVeg));
         tagDataArrayList.add(new Tag_Data("Other",counterOther));
     }
-
-
 }
