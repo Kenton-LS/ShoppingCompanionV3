@@ -42,6 +42,7 @@ public class In_Folder_Screen extends AppCompatActivity
 
     Button push;
     ImageView confirm; // For size / goal
+    ImageView back;
     private EditText mEditTextSize;
 
     List<String> contentList; // For FireBase list of contents
@@ -71,6 +72,7 @@ public class In_Folder_Screen extends AppCompatActivity
         mTextFolder = findViewById(R.id.text_view_contents);
         contentsListView = findViewById(R.id.lv_contents);
 
+        back = findViewById(R.id.img_back);
         push = findViewById(R.id.btn_push);
         confirm = findViewById(R.id.img_confirmSize);
         mEditTextSize = findViewById(R.id.et_size);
@@ -102,6 +104,12 @@ public class In_Folder_Screen extends AppCompatActivity
         // ---------------------------------------------------------------------------------------------------------------------------------------//
         // For PUSH button
         // Open the AddItemActivity.java class
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), All_Folder_Screen.class));
+            }
+        });
         push.setOnClickListener(new View.OnClickListener()
         {
             @Override

@@ -133,7 +133,7 @@ public class Register extends AppCompatActivity {
                 mBackBtn2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        startActivity(new Intent(getApplicationContext(), All_Folder_Screen.class));
                     }
                 });
             }

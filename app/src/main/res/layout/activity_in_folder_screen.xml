@@ -60,9 +60,24 @@
         <ListView
             android:id="@+id/lv_contents"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="293dp">
 
         </ListView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="209dp"
+                android:layout_marginBottom="22dp"
+                app:srcCompat="@drawable/back_one" />
+        </RelativeLayout>
 
     </LinearLayout>
 
