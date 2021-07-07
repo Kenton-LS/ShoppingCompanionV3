@@ -54,11 +54,18 @@
             android:hint="New item's quantity"
             android:inputType="textPersonName" />
 
+<<<<<<< HEAD:app/src/main/res/layout/activity_add_item.xml
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/date_header" />
+=======
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="54dp" />
+>>>>>>> main:app/src/main/res/layout/activity_add_item_screen.xml
 
         <EditText
             android:id="@+id/et_itemDate"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".MainActivity">
+    tools:context=".Add_Folder_Screen">
 
     <EditText
         android:id="@+id/edit_text_file_name"
@@ -55,7 +55,7 @@
         android:layout_marginTop="620dp"
         android:layout_toEndOf="@+id/cameraButton"
         android:gravity="center"
-        android:text="Show Uploads"
+        android:text="Show My Lists"
         android:textSize="16sp" />
 
     <Button

@@ -43,14 +43,12 @@ import com.squareup.picasso.Picasso;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 
 import static android.content.ContentValues.TAG;
 
-public class MainActivity extends AppCompatActivity
+public class Add_Folder_Screen extends AppCompatActivity
 {
     private static final int PICK_IMAGE_REQUEST = 1; // Constant used to identify image request
     private static final int TAKE_IMAGE_REQUEST = 100; // Constant used to identify image request
@@ -69,15 +67,15 @@ public class MainActivity extends AppCompatActivity
 
     private StorageTask mUploadTask; // Testing if GitHub works
 
-    String valueUID; // For parsing the current user's ID into the firebase to make sure we only retrieve THIS user's data
+    String userFirebaseID; // For parsing the current user's ID into the firebase to make sure we only retrieve THIS user's data
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_screen);
 
-        valueUID = getIntent().getStringExtra("ValueUID"); // Get the current user's ID
+        userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // Get the current user's ID
 
         // Assigning variables
         mButtonChooseImage = findViewById(R.id.img_addFile);
@@ -87,8 +85,8 @@ public class MainActivity extends AppCompatActivity
         mImageView = findViewById(R.id.image_view);
         mProgressBar = findViewById(R.id.progress_bar);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference(valueUID + "/uploads");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference(valueUID + "/uploads");
+        mStorageRef = FirebaseStorage.getInstance().getReference(userFirebaseID + "/uploads");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference(userFirebaseID + "/uploads");
         isStoragePermissionGranted();
         // Set OnClick Listeners on buttons and textview (which also functions as an additional button)
         mButtonChooseImage.setOnClickListener(new View.OnClickListener()
@@ -109,7 +107,7 @@ public class MainActivity extends AppCompatActivity
                 if (mUploadTask != null && mUploadTask.isInProgress())
                 {
                     // Don't upload, rather show toast message
-                    Toast.makeText(MainActivity.this, "Currently uploading something else", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Add_Folder_Screen.this, "Currently uploading something else", Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -228,7 +226,7 @@ public class MainActivity extends AppCompatActivity
                             String uploadId = mDatabaseRef.push().getKey();
                             mDatabaseRef.child(uploadId).setValue(upload); // Take unique id and set data to uploadfile (which contains upload name and url)*/
 
-                            Toast.makeText(MainActivity.this, "Upload success", Toast.LENGTH_LONG).show();
+                            Toast.makeText(Add_Folder_Screen.this, "Upload success", Toast.LENGTH_LONG).show();
                             Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
                             while (!urlTask.isSuccessful());
                             Uri downloadUrl = urlTask.getResult();
@@ -245,7 +243,7 @@ public class MainActivity extends AppCompatActivity
                         public void onFailure(@NonNull Exception e)
                         {
                             // Show error as toast message
-                            Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Add_Folder_Screen.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>()
@@ -268,8 +266,8 @@ public class MainActivity extends AppCompatActivity
 
     private void openImagesActivity() // On clicking ShowUploads button, displays all folders in Images_View class
     {
-        Intent i = new Intent(getApplicationContext(), ImageViewHolder.class);
-        i.putExtra("ValueUID", valueUID); // Send through the User's ID to the MainActivity
+        Intent i = new Intent(getApplicationContext(), All_Folder_Screen.class);
+        i.putExtra("UserFirebaseID", userFirebaseID); // Send through the User's ID to the MainActivity
         startActivity(i);
     }
 

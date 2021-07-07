@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,8 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,11 +25,16 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContentsActivity extends AppCompatActivity
+public class In_Folder_Screen extends AppCompatActivity
 {
-    FirebaseDatabase database = FirebaseDatabase.getInstance(); // FireBase Reference
-    //DatabaseReference myRef = database.getReference("message");
+    //------------------------------------References------------------------------------------//
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef;
+    String folderImageUrl;
+    String folderName;
+    String folderFirebaseKey;
+    String userFirebaseID;
+    //----------------------------------------------------------------------------------------//
 
     private ImageView mImageFolder;
     private TextView mTextFolder;
@@ -52,16 +54,17 @@ public class ContentsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contents);
+        setContentView(R.layout.activity_in_folder_screen);
 
-        String value1 = getIntent().getStringExtra("Value1"); // URL passed from ImageViewHolder
-        String value2 = getIntent().getStringExtra("Value2"); // Name passed from ImageViewHolder
-        String value3 = getIntent().getStringExtra("Value3"); // Key passed from ImageViewHolder
-        //int value4 = getIntent().getIntExtra("Value4", 30); // Goal passed from ImageViewHolder
-        String valueUID = getIntent().getStringExtra("ValueUID"); // Get the current user's ID
-        Toast.makeText(ContentsActivity.this,  "Name: " + value2 + "\nKey: " + value3 + "\nLink: " + value1, Toast.LENGTH_SHORT).show();
+        //------------------------------------References------------------------------------------//
+        folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
+        folderName = getIntent().getStringExtra("FolderName"); // Name passed from ImageViewHolder
+        folderFirebaseKey = getIntent().getStringExtra("FolderFirebaseKey"); // Key passed from ImageViewHolder
+        userFirebaseID = getIntent().getStringExtra("UserFirebaseID"); // Get the current user's ID
+        myRef = FirebaseDatabase.getInstance().getReference(userFirebaseID + "/uploads");
+        //----------------------------------------------------------------------------------------//
 
-        myRef = FirebaseDatabase.getInstance().getReference(valueUID + "/uploads");
+        Toast.makeText(In_Folder_Screen.this,  "Name: " + folderName + "\nKey: " + folderFirebaseKey + "\nLink: " + folderImageUrl, Toast.LENGTH_SHORT).show();
 
         // Declarations
         mImageFolder = findViewById(R.id.image_view_contents);
@@ -73,11 +76,11 @@ public class ContentsActivity extends AppCompatActivity
         mEditTextSize = findViewById(R.id.et_size);
 
         // Set image and text for folder header
-        mTextFolder.setText(value2);
-        Picasso.get().load(value1).placeholder(R.mipmap.ic_launcher) // Mipmap creates default placeholder image while real images load
+        mTextFolder.setText(folderName);
+        Picasso.get().load(folderImageUrl).placeholder(R.mipmap.ic_launcher) // Mipmap creates default placeholder image while real images load
                 .fit().centerCrop().into(mImageFolder);
 
-        myRef.child(value3).child("contents").addValueEventListener(new ValueEventListener()
+        myRef.child(folderFirebaseKey).child("contents").addValueEventListener(new ValueEventListener()
         {
             @Override
             public void onDataChange(DataSnapshot snapshot)
@@ -104,12 +107,11 @@ public class ContentsActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent i = new Intent(getApplicationContext(), AddItemActivity.class);
-                i.putExtra("Value1", value1); // Send through the URL for the image we want to display
-                i.putExtra("Value2", value2); // Send through the name for the image we want to display
-                i.putExtra("Value3", value3);
-                //i.putExtra("Value4", value4);
-                i.putExtra("ValueUID", valueUID); // Send through user's ID to access only THIS USER's DATA
+                Intent i = new Intent(getApplicationContext(), Add_Item_Screen.class);
+                i.putExtra("FolderImageUrl", folderImageUrl); // Send through the URL for the image we want to display
+                i.putExtra("FolderName", folderName); // Send through the name for the image we want to display
+                i.putExtra("FolderFirebaseKey", folderFirebaseKey);
+                i.putExtra("UserFirebaseID", userFirebaseID); // Send through user's ID to access only THIS USER's DATA
 
                 startActivity(i);
             }
@@ -156,7 +158,7 @@ public class ContentsActivity extends AppCompatActivity
         // ---------------------------------------------------------------------------------------------------------------------------------------//
         // Fills list with contents for this folder
         // For finding and assigning content values. Check Contents.java class for more info
-        myRef.child(value3).child("contents").addValueEventListener(new ValueEventListener() { // Was prev just myRef.addValue... etc
+        myRef.child(folderFirebaseKey).child("contents").addValueEventListener(new ValueEventListener() { // Was prev just myRef.addValue... etc
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 contents = new Contents();
@@ -170,14 +172,14 @@ public class ContentsActivity extends AppCompatActivity
                 }
 
                 // Pass in current context, layout, and orderList
-                adapter = new ArrayAdapter(ContentsActivity.this, android.R.layout.simple_list_item_1, contentList);
+                adapter = new ArrayAdapter(In_Folder_Screen.this, android.R.layout.simple_list_item_1, contentList);
                 contentsListView.setAdapter(adapter); // Takes all the data and displays it into the list
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error)
             {
-                Toast.makeText(ContentsActivity.this, error.getMessage(), Toast.LENGTH_SHORT);
+                Toast.makeText(In_Folder_Screen.this, error.getMessage(), Toast.LENGTH_SHORT);
             }
         });
         // ---------------------------------------------------------------------------------------------------------------------------------------//

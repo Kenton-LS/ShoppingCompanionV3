@@ -27,10 +27,21 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register" />
+<<<<<<< HEAD
         <activity android:name=".AddItemActivity" />
         <activity android:name=".ContentsActivity" />
         <activity android:name=".ImageViewHolder" />
         <activity android:name=".MainActivity" />
+=======
+        <activity android:name=".Add_Item_Screen"/>
+        <activity android:name=".In_Folder_Screen" />
+        <activity android:name=".All_Folder_Screen" />
+        <activity android:name=".Add_Folder_Screen"/>
+        <activity android:name=".Statistic_Screen"/>
+        <activity android:name=".Chart_Radar_Screen"/>
+        <activity android:name=".Chart_Pie_Screen"/>
+        <activity android:name=".Chart_Bar_Screen"/>
+>>>>>>> main
     </application>
 
 </manifest>
