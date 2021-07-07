@@ -64,6 +64,8 @@ public class In_Folder_Screen extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_folder_screen);
 
+
+
         //------------------------------------References------------------------------------------//
         folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
         folderName = getIntent().getStringExtra("FolderName"); // Name passed from ImageViewHolder
@@ -78,6 +80,9 @@ public class In_Folder_Screen extends AppCompatActivity
         mImageFolder = findViewById(R.id.image_view_contents);
         mTextFolder = findViewById(R.id.text_view_contents);
         contentsListView = findViewById(R.id.lv_contents);
+
+        contentsListView.setItemsCanFocus(false);
+        contentsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         push = findViewById(R.id.btn_push);
         confirm = findViewById(R.id.btn_confirm);
@@ -181,7 +186,7 @@ public class In_Folder_Screen extends AppCompatActivity
                 }
 
                 // Pass in current context, layout, and orderList
-                adapter = new ArrayAdapter(In_Folder_Screen.this, android.R.layout.simple_list_item_1, contentList);
+                adapter = new ArrayAdapter(In_Folder_Screen.this, android.R.layout.simple_list_item_multiple_choice, contentList);
                 contentsListView.setAdapter(adapter); // Takes all the data and displays it into the list
 
                 int cntCount = contentsListView.getCount();

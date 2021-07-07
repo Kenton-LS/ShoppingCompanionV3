@@ -40,6 +40,7 @@ public class Add_Item_Screen extends AppCompatActivity implements AdapterView.On
     private TextView mTextFolder;
     EditText itemName, itemQty, itemDate, itemDesc; // For adding a new item -> the name and quantity
     int index = 0; // For determining number of items in FireBase
+    Boolean checked = true;
 
     Button push, back;
     String enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc, enteredDropdownTag;
@@ -71,7 +72,7 @@ public class Add_Item_Screen extends AppCompatActivity implements AdapterView.On
         back = findViewById(R.id.btn_back);
 
         // For dropdown menu
-        Spinner spinner = findViewById(R.id.spinner1);
+        Spinner spinner = findViewById(R.id.sp_itemTag);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tags, android.R.layout.simple_spinner_item); // ArrayAdapter for dropdown spinner list (POE T3)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -119,7 +120,7 @@ public class Add_Item_Screen extends AppCompatActivity implements AdapterView.On
                 enteredItemDesc = itemDesc.getText().toString().trim();
                 enteredDropdownTag = chosenDropdownTag;
 
-                contents = new Contents(enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc, enteredDropdownTag);
+                contents = new Contents(enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc, enteredDropdownTag, checked);
                 //myRef.child(String.valueOf(i)).setValue(contents); OLD
 
                 Toast.makeText(Add_Item_Screen.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
