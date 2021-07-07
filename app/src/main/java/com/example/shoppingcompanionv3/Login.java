@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,8 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Login extends AppCompatActivity
 {
     EditText mEmail, mPassword;
-    ImageView mLoginBtn;
-    ImageView mBackBtn;
+    Button mLoginBtn;
     TextView mCreateBtn;
     FirebaseAuth fAuth;
 
@@ -33,12 +31,11 @@ public class Login extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mBackBtn = findViewById(R.id.img_back);
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         fAuth = FirebaseAuth.getInstance();
-        mLoginBtn = findViewById(R.id.img_continueLogin);
-        mCreateBtn = findViewById(R.id.txtCreate);
+        mLoginBtn = findViewById(R.id.loginBtn);
+        mCreateBtn = findViewById(R.id.createNewText);
 
         mLoginBtn.setOnClickListener(new View.OnClickListener()
         {
@@ -96,9 +93,11 @@ public class Login extends AppCompatActivity
             }
         });
 
-        mCreateBtn.setOnClickListener(new View.OnClickListener() {
+        mCreateBtn.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 startActivity(new Intent(getApplicationContext(), Register.class));
             }
         });

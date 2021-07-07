@@ -45,7 +45,7 @@ public class In_Folder_Screen extends AppCompatActivity
     int progressCount = 0;
 
     Button push;
-    ImageView confirm; // For size / goal
+    Button confirm; // For size / goal
     private EditText mEditTextSize;
 
     List<String> contentList; // For FireBase list of contents
@@ -85,7 +85,7 @@ public class In_Folder_Screen extends AppCompatActivity
         contentsListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         push = findViewById(R.id.btn_push);
-        confirm = findViewById(R.id.img_confirmSize);
+        confirm = findViewById(R.id.btn_confirm);
         mEditTextSize = findViewById(R.id.et_size);
         progressBar = findViewById(R.id.pb_goal);
 
