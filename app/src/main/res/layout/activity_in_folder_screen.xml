@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -46,14 +47,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/btn_confirm"
-                android:layout_width="123dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="16dp"
-                android:text="CONFIRM" />
-
             <EditText
                 android:id="@+id/et_size"
                 android:layout_width="246dp"
@@ -63,6 +56,14 @@
                 android:gravity="center|center_vertical"
                 android:hint="00 / 00 - Enter new size"
                 android:inputType="textPersonName" />
+
+            <ImageView
+                android:id="@+id/img_confirmSize"
+                android:layout_width="158dp"
+                android:layout_height="42dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="3dp"
+                app:srcCompat="@drawable/confirm_one" />
 
         </RelativeLayout>
 
