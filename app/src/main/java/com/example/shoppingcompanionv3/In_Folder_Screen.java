@@ -6,12 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +42,7 @@ public class In_Folder_Screen extends AppCompatActivity
     private ImageView mImageFolder;
     private TextView mTextFolder;
     int index = 0; // Number of children items in this folder
+    int progressCount = 0;
 
     Button push;
     Button confirm; // For size / goal
@@ -49,6 +53,10 @@ public class In_Folder_Screen extends AppCompatActivity
 
     Contents contents; // For contents (and their variables) in the list
     ListView contentsListView; // For list
+
+    ProgressBar progressBar;
+
+    private String my_sel_items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -74,6 +82,7 @@ public class In_Folder_Screen extends AppCompatActivity
         push = findViewById(R.id.btn_push);
         confirm = findViewById(R.id.btn_confirm);
         mEditTextSize = findViewById(R.id.et_size);
+        progressBar = findViewById(R.id.pb_goal);
 
         // Set image and text for folder header
         mTextFolder.setText(folderName);
@@ -174,6 +183,33 @@ public class In_Folder_Screen extends AppCompatActivity
                 // Pass in current context, layout, and orderList
                 adapter = new ArrayAdapter(In_Folder_Screen.this, android.R.layout.simple_list_item_1, contentList);
                 contentsListView.setAdapter(adapter); // Takes all the data and displays it into the list
+
+                int cntCount = contentsListView.getCount();
+                progressBar.setMax(cntCount);
+
+                contentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+                    public void onItemClick(AdapterView arg0, View arg1, int arg2, long arg3) {
+                        //List list = new ArrayList();
+                        my_sel_items = new String("Selected Items");
+                        SparseBooleanArray cntBool = contentsListView.getCheckedItemPositions();
+                        int checkCount = 0;
+                        for (int i = 0; i < cntBool.size(); i++){
+                            if (cntBool.valueAt(i) == true){
+                                checkCount++;
+                            }
+                        }
+                        progressBar.setProgress(checkCount);
+
+                       /* for (int i = 0; i < cntCount; i++) {
+                            if (cntBool.get(i)){
+                                progressCount++;
+                                progressBar.setProgress(progressCount);
+                            }
+                        }*/
+                    }
+                });
             }
 
             @Override
