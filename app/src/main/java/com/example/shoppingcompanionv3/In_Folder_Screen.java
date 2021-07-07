@@ -24,6 +24,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.util.SparseBooleanArray;
+import android.widget.AdapterView;
+import android.widget.ProgressBar;
 
 public class In_Folder_Screen extends AppCompatActivity
 {
@@ -39,6 +42,7 @@ public class In_Folder_Screen extends AppCompatActivity
     private ImageView mImageFolder;
     private TextView mTextFolder;
     int index = 0; // Number of children items in this folder
+    int progressCount = 0;
 
     Button push;
     ImageView confirm; // For size / goal
@@ -50,6 +54,10 @@ public class In_Folder_Screen extends AppCompatActivity
 
     Contents contents; // For contents (and their variables) in the list
     ListView contentsListView; // For list
+
+    ProgressBar progressBar;
+
+    private String my_sel_items;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -71,7 +79,7 @@ public class In_Folder_Screen extends AppCompatActivity
         mImageFolder = findViewById(R.id.image_view_contents);
         mTextFolder = findViewById(R.id.text_view_contents);
         contentsListView = findViewById(R.id.lv_contents);
-
+        progressBar = findViewById(R.id.pb_goal);
         back = findViewById(R.id.img_back);
         push = findViewById(R.id.btn_push);
         confirm = findViewById(R.id.img_confirmSize);
@@ -180,8 +188,34 @@ public class In_Folder_Screen extends AppCompatActivity
                 }
 
                 // Pass in current context, layout, and orderList
-                adapter = new ArrayAdapter(In_Folder_Screen.this, android.R.layout.simple_list_item_1, contentList);
+                adapter = new ArrayAdapter(In_Folder_Screen.this, android.R.layout.simple_list_item_multiple_choice, contentList);
                 contentsListView.setAdapter(adapter); // Takes all the data and displays it into the list
+                int cntCount = contentsListView.getCount();
+                progressBar.setMax(cntCount);
+
+                contentsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+                    public void onItemClick(AdapterView arg0, View arg1, int arg2, long arg3) {
+                        //List list = new ArrayList();
+                        my_sel_items = new String("Selected Items");
+                        SparseBooleanArray cntBool = contentsListView.getCheckedItemPositions();
+                        int checkCount = 0;
+                        for (int i = 0; i < cntBool.size(); i++){
+                            if (cntBool.valueAt(i) == true){
+                                checkCount++;
+                            }
+                        }
+                        progressBar.setProgress(checkCount);
+
+                       /* for (int i = 0; i < cntCount; i++) {
+                            if (cntBool.get(i)){
+                                progressCount++;
+                                progressBar.setProgress(progressCount);
+                            }
+                        }*/
+                    }
+                });
             }
 
             @Override
