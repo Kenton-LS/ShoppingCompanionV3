@@ -102,12 +102,5 @@ public class Login extends AppCompatActivity
                 startActivity(new Intent(getApplicationContext(), Register.class));
             }
         });
-
-        mBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            }
-        });
     }
 }

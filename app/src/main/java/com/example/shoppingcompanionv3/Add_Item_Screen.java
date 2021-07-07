@@ -3,6 +3,7 @@ package com.example.shoppingcompanionv3;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,7 +43,7 @@ public class Add_Item_Screen extends AppCompatActivity implements AdapterView.On
     int index = 0; // For determining number of items in FireBase
     Boolean checked = true;
 
-    Button push, back;
+    ImageView push, back;
     String enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc, enteredDropdownTag;
     Contents contents; // For contents (and their variables) in the list
 
@@ -68,7 +69,7 @@ public class Add_Item_Screen extends AppCompatActivity implements AdapterView.On
         itemQty = findViewById(R.id.et_itemQty);
         itemDate = findViewById(R.id.et_itemDate);
         itemDesc = findViewById(R.id.et_itemDesc);
-        push = findViewById(R.id.btn_push);
+        push = findViewById(R.id.btn_Push);
         back = findViewById(R.id.btn_back);
 
         // For dropdown menu
