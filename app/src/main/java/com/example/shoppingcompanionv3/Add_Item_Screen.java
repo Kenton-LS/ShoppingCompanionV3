@@ -20,11 +20,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import java.lang.reflect.Array;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 
-public class AddItemScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener
+public class Add_Item_Screen extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
     //------------------------------------References------------------------------------------//
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -34,13 +34,11 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
     String folderFirebaseKey;
     String userFirebaseID;
     String chosenDropdownTag;
-    Boolean itemCheck;
     //----------------------------------------------------------------------------------------//
 
     private ImageView mImageFolder;
     private TextView mTextFolder;
     EditText itemName, itemQty, itemDate, itemDesc; // For adding a new item -> the name and quantity
-    View itemTag;
     int index = 0; // For determining number of items in FireBase
 
     Button push, back;
@@ -51,7 +49,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_additemscreen);
+        setContentView(R.layout.activity_add_item_screen);
 
         //------------------------------------References------------------------------------------//
         folderImageUrl = getIntent().getStringExtra("FolderImageUrl"); // URL passed from ImageViewHolder
@@ -69,12 +67,11 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
         itemQty = findViewById(R.id.et_itemQty);
         itemDate = findViewById(R.id.et_itemDate);
         itemDesc = findViewById(R.id.et_itemDesc);
-        itemTag = findViewById(R.id.sp_itemTag);
         push = findViewById(R.id.btn_push);
         back = findViewById(R.id.btn_back);
 
         // For dropdown menu
-        Spinner spinner = findViewById(R.id.sp_itemTag);
+        Spinner spinner = findViewById(R.id.spinner1);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tags, android.R.layout.simple_spinner_item); // ArrayAdapter for dropdown spinner list (POE T3)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -121,12 +118,11 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
                 enteredItemDate = itemDate.getText().toString().trim();
                 enteredItemDesc = itemDesc.getText().toString().trim();
                 enteredDropdownTag = chosenDropdownTag;
-                itemCheck = false;
 
-                contents = new Contents(enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc, enteredDropdownTag, itemCheck);
+                contents = new Contents(enteredItemName, enteredItemQty, enteredItemDate, enteredItemDesc, enteredDropdownTag);
                 //myRef.child(String.valueOf(i)).setValue(contents); OLD
 
-                Toast.makeText(AddItemScreen.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Add_Item_Screen.this, "COUNT " + index, Toast.LENGTH_SHORT).show();
                 myRef.child(folderFirebaseKey).child("contents").child(String.valueOf(index)).setValue(contents);
 
                 itemName.setText(""); itemQty.setText(""); itemDate.setText(currentDate); itemDesc.setText("");
@@ -138,7 +134,7 @@ public class AddItemScreen extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onClick(View v)
             {
-                Intent i = new Intent(getApplicationContext(), InFolderScreen.class);
+                Intent i = new Intent(getApplicationContext(), In_Folder_Screen.class);
                 i.putExtra("FolderImageUrl", folderImageUrl); // Send through the URL for the image we want to display
                 i.putExtra("FolderName", folderName); // Send through the name for the image we want to display
                 i.putExtra("FolderFirebaseKey", folderFirebaseKey); // Key

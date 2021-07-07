@@ -18,13 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 // Extracts the data from Images_View in the form of an Upload items list
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder>
+public class Image_Adapter extends RecyclerView.Adapter<Image_Adapter.ImageViewHolder>
 {
     private Context mContext; // Save the context
     private List<Upload> mUploads; // The list of single upload items
     private OnItemClickListener mListener; // For managing clicking on folders
 
-    public ImageAdapter(Context context, List<Upload> uploads)
+    public Image_Adapter(Context context, List<Upload> uploads)
     {
         mContext = context;
         mUploads = uploads;

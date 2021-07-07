@@ -25,14 +25,14 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter></activity>
         <activity android:name=".Register" />
-        <activity android:name=".AddItemScreen"/>
-        <activity android:name=".InFolderScreen" />
-        <activity android:name=".AllFolderScreen" />
-        <activity android:name=".AddFolderScreen"/>
-        <activity android:name=".StatisticScreen"/>
-        <activity android:name=".ChartRadarScreen"/>
-        <activity android:name=".ChartPieScreen"/>
-        <activity android:name=".ChartBarScreen"/>
+        <activity android:name=".Add_Item_Screen"/>
+        <activity android:name=".In_Folder_Screen" />
+        <activity android:name=".All_Folder_Screen" />
+        <activity android:name=".Add_Folder_Screen"/>
+        <activity android:name=".Statistic_Screen"/>
+        <activity android:name=".Chart_Radar_Screen"/>
+        <activity android:name=".Chart_Pie_Screen"/>
+        <activity android:name=".Chart_Bar_Screen"/>
     </application>
 
 

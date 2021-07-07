@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChartRadarScreen"
+    tools:context=".Chart_Pie_Screen"
     android:padding="10dp">
 
-    <com.github.mikephil.charting.charts.RadarChart
-        android:id="@+id/radarChart"
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

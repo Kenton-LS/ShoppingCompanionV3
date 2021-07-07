@@ -94,7 +94,7 @@ public class Register extends AppCompatActivity
                             {
                                 public void run()
                                 {
-                                    Intent i = new Intent(getApplicationContext(), AllFolderScreen.class);
+                                    Intent i = new Intent(getApplicationContext(), All_Folder_Screen.class);
                                     i.putExtra("UserFirebaseID", UserID); // Send through the User's ID to the MainActivity
                                     startActivity(i);
                                 }
