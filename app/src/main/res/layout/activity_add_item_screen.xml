@@ -41,14 +41,11 @@
             android:hint="New item's quantity"
             android:inputType="textPersonName" />
 
-<<<<<<< HEAD
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/date_header" />
-=======
->>>>>>> parent of 9b45834 (Merge branch 'Dylan's-Login' into McBrad's-Camera)
         <Spinner
             android:id="@+id/sp_itemTag"
             android:layout_width="match_parent"
@@ -74,7 +71,6 @@
         <Button
             android:id="@+id/btn_push"
             android:layout_width="match_parent"
-<<<<<<< HEAD
             android:layout_height="match_parent">
 
             <ImageView
@@ -97,18 +93,12 @@
                 android:layout_marginBottom="-2dp"
                 app:srcCompat="@drawable/confirm_one" />
         </RelativeLayout>
-=======
-            android:layout_height="wrap_content"
-            android:text="ADD"
-            android:textColor="#FFFFFF" />
-
         <Button
             android:id="@+id/btn_back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="BACK"
             android:textColor="#FFFFFF" />
->>>>>>> parent of 9b45834 (Merge branch 'Dylan's-Login' into McBrad's-Camera)
 
     </LinearLayout>
 

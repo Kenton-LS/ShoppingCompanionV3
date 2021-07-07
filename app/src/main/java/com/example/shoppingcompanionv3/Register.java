@@ -110,8 +110,6 @@ public class Register extends AppCompatActivity
                 });
             }
         });
-
-<<<<<<< HEAD
                 mLoginBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -125,14 +123,12 @@ public class Register extends AppCompatActivity
                         startActivity(new Intent(getApplicationContext(), All_Folder_Screen.class));
                     }
                 });
-=======
         mLoginBtn.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 startActivity(new Intent(getApplicationContext(), Login.class));
->>>>>>> parent of 9b45834 (Merge branch 'Dylan's-Login' into McBrad's-Camera)
             }
         });
     }
