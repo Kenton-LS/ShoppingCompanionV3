@@ -86,32 +86,6 @@ public class Chart_Bar_Screen extends AppCompatActivity
             labelName.add(tag);
         }
 
-        /*categories.add(new BarEntry(0, counterAlcohol));
-        categories.add(new BarEntry(1, counterCarbs));
-        categories.add(new BarEntry(2, counterDairy));
-        categories.add(new BarEntry(3, counterDrinks));
-        categories.add(new BarEntry(4, counterFruit));
-        categories.add(new BarEntry(5, counterGrains));
-        categories.add(new BarEntry(6, counterOils));
-        categories.add(new BarEntry(7, counterProtein));
-        categories.add(new BarEntry(8, counterSugary));
-        categories.add(new BarEntry(9, counterTakeaway));
-        categories.add(new BarEntry(10, counterVeg));
-        categories.add(new BarEntry(11, counterOther));
-
-        labelName.add("Alcohol");
-        labelName.add("Carbs");
-        labelName.add("Dairy");
-        labelName.add("Drinks");
-        labelName.add("Fruit");
-        labelName.add("Grains");
-        labelName.add("Oils");
-        labelName.add("Protein");
-        labelName.add("Sugary");
-        labelName.add("Takeaway");
-        labelName.add("Veg");
-        labelName.add("Other");*/
-
         BarDataSet barDataSet = new BarDataSet(categories, "Amount");
         barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         barDataSet.setValueTextColor(Color.BLACK);

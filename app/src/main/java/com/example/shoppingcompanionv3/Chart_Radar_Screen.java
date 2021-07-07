@@ -9,6 +9,7 @@ import com.github.mikephil.charting.data.RadarData;
 import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.data.RadarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -59,7 +60,7 @@ public class Chart_Radar_Screen extends AppCompatActivity
 
         RadarChart radarChart = findViewById(R.id.radarChart);
 
-        ArrayList<RadarEntry> visitorsForFirstWebsite = new ArrayList<>();
+        /*ArrayList<RadarEntry> visitorsForFirstWebsite = new ArrayList<>();
         visitorsForFirstWebsite.add(new RadarEntry(counterAlcohol));
         visitorsForFirstWebsite.add(new RadarEntry(counterCarbs));
         visitorsForFirstWebsite.add(new RadarEntry(counterDairy));
@@ -71,9 +72,16 @@ public class Chart_Radar_Screen extends AppCompatActivity
         radarDataSetForFirstWebsite.setColor(Color.RED);
         radarDataSetForFirstWebsite.setLineWidth(2f);
         radarDataSetForFirstWebsite.setValueTextColor(Color.RED);
-        radarDataSetForFirstWebsite.setValueTextSize(14f);
+        radarDataSetForFirstWebsite.setValueTextSize(14f);*/
 
         ArrayList<RadarEntry> visitorsForSecondWebsite = new ArrayList<>();
+        visitorsForSecondWebsite.add(new RadarEntry(counterAlcohol));
+        visitorsForSecondWebsite.add(new RadarEntry(counterCarbs));
+        visitorsForSecondWebsite.add(new RadarEntry(counterDairy));
+        visitorsForSecondWebsite.add(new RadarEntry(counterDrinks));
+        visitorsForSecondWebsite.add(new RadarEntry(counterFruit));
+        visitorsForSecondWebsite.add(new RadarEntry(counterGrains));
+
         visitorsForSecondWebsite.add(new RadarEntry(counterOils));
         visitorsForSecondWebsite.add(new RadarEntry(counterProtein));
         visitorsForSecondWebsite.add(new RadarEntry(counterSugary));
@@ -81,17 +89,17 @@ public class Chart_Radar_Screen extends AppCompatActivity
         visitorsForSecondWebsite.add(new RadarEntry(counterVeg));
         visitorsForSecondWebsite.add(new RadarEntry(counterOther));
 
-        RadarDataSet radarDataSetForSecondWebsite = new RadarDataSet(visitorsForSecondWebsite, "Categories 2");
+        RadarDataSet radarDataSetForSecondWebsite = new RadarDataSet(visitorsForSecondWebsite, "Categories");
         radarDataSetForSecondWebsite.setColor(Color.BLUE);
         radarDataSetForSecondWebsite.setLineWidth(2f);
-        radarDataSetForSecondWebsite.setValueTextColor(Color.BLUE);
+        radarDataSetForSecondWebsite.setColors(ColorTemplate.COLORFUL_COLORS);
         radarDataSetForSecondWebsite.setValueTextSize(14f);
 
         RadarData radarData = new RadarData();
-        radarData.addDataSet(radarDataSetForFirstWebsite);
+        //radarData.addDataSet(radarDataSetForFirstWebsite);
         radarData.addDataSet(radarDataSetForSecondWebsite);
 
-        String[] labels = {"2014", "2015", "2016", "2017", "2018", "2019"};
+        String[] labels = {"Alcohol", "Carbs", "Dairy", "Drinks", "Fruit", "Grains", "Oils", "Protein", "Sugary", "Takeaway", "Veg", "Other"};
 
         XAxis xAxis = radarChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
