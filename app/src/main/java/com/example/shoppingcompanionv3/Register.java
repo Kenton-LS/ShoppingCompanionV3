@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class Register extends AppCompatActivity {
 
@@ -52,7 +54,7 @@ public class Register extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            startActivity(new Intent(getApplicationContext(), All_Folder_Screen.class));
             finish();
         }
 
@@ -63,22 +65,22 @@ public class Register extends AppCompatActivity {
                 String password = mPassword.getText().toString().trim();
                 String username = mFullName.getText().toString();
 
-                if(TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     mEmail.setError("Email is required");
                     return;
                 }
 
-                if(TextUtils.isEmpty(username)){
+                if (TextUtils.isEmpty(username)) {
                     mFullName.setError("Username is required");
                     return;
                 }
 
-                if(TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     mPassword.setError("Password is required");
                     return;
                 }
 
-                if(password.length() < 6){
+                if (password.length() < 6) {
                     mPassword.setError("Password must be at least 6 characters long");
                     return;
                 }
@@ -86,7 +88,7 @@ public class Register extends AppCompatActivity {
                 fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Toast.makeText(Register.this, "User Created.", Toast.LENGTH_SHORT).show();
 
                             UserID = fAuth.getCurrentUser().getUid();
@@ -98,42 +100,42 @@ public class Register extends AppCompatActivity {
                                 public void onSuccess(Void aVoid) {
                                     Log.d("TAG", "Success: User Profile created for" + UserID);
 
-                            String UserID = fAuth.getCurrentUser().getUid();
-                            Toast.makeText(Register.this, "ID: " + UserID, Toast.LENGTH_SHORT).show();
+                                    String UserID = fAuth.getCurrentUser().getUid();
+                                    Toast.makeText(Register.this, "ID: " + UserID, Toast.LENGTH_SHORT).show();
 
-                            Handler handler = new Handler(); // Delay for 0.5 seconds
-                            handler.postDelayed(new Runnable()
-                            {
-                                public void run()
-                                {
-                                    Intent i = new Intent(getApplicationContext(), All_Folder_Screen.class);
-                                    i.putExtra("UserFirebaseID", UserID); // Send through the User's ID to the MainActivity
-                                    startActivity(i);
-
-
+                                    Handler handler = new Handler(); // Delay for 0.5 seconds
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent i = new Intent(getApplicationContext(), All_Folder_Screen.class);
+                                            i.putExtra("UserFirebaseID", UserID); // Send through the User's ID to the MainActivity
+                                            startActivity(i);
+                                        }
+                                    }, 500);
                                 }
-                            });
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                        }else{
-                            Toast.makeText(Register.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
+                            });
+                        }
+                        else
+                        {
+                            Toast.makeText(Register.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-            }
-        });
 
-        mLoginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Login.class));
-            }
-        });
+                mLoginBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getApplicationContext(), Login.class));
+                    }
+                });
 
-        mBackBtn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                mBackBtn2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    }
+                });
             }
         });
     }
