@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,10 +40,10 @@ public class Login extends AppCompatActivity
         mEmail = findViewById(R.id.email);
         mPassword = findViewById(R.id.password);
         fAuth = FirebaseAuth.getInstance();
-        mLoginBtn = findViewById(R.id.img_continueLogin);
-        mCreateBtn = findViewById(R.id.txtCreate);
+        mLoginBtn = (ImageView) findViewById(R.id.img_continueLogin);
+        mCreateBtn = (TextView) findViewById(R.id.txtCreate);
 
-        mLoginBtn.setOnClickListener(new View.OnClickListener()
+        mLoginBtn.setOnClickListener(new OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -72,20 +75,7 @@ public class Login extends AppCompatActivity
                     {
                         if(task.isSuccessful())
                         {
-                            Toast.makeText(Login.this, "User Logged in.", Toast.LENGTH_SHORT).show();
-                            String UserID = fAuth.getCurrentUser().getUid();
-                            Toast.makeText(Login.this, "ID: " + UserID, Toast.LENGTH_SHORT).show();
-
-                            Handler handler = new Handler(); // Delay for 0.5 seconds
-                            handler.postDelayed(new Runnable()
-                            {
-                                public void run()
-                                {
-                                    Intent i = new Intent(getApplicationContext(), All_Folder_Screen.class);
-                                    i.putExtra("UserFirebaseID", UserID); // Send through the User's ID to the MainActivity
-                                    startActivity(i);
-                                }
-                            }, 500); // End delay
+                            Login();
                         }
                         else
                         {
@@ -96,11 +86,32 @@ public class Login extends AppCompatActivity
             }
         });
 
-        mCreateBtn.setOnClickListener(new View.OnClickListener() {
+        mCreateBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("LOGIN SCREEN","onClick for view change to Register");
                 startActivity(new Intent(getApplicationContext(), Register.class));
+
             }
         });
+
     }
+
+    public void Login(){
+        Toast.makeText(Login.this, "User Logged in.", Toast.LENGTH_SHORT).show();
+        String UserID = fAuth.getCurrentUser().getUid();
+        Toast.makeText(Login.this, "ID: " + UserID, Toast.LENGTH_SHORT).show();
+
+        Handler handler = new Handler(); // Delay for 0.5 seconds
+        handler.postDelayed(new Runnable()
+        {
+            public void run()
+            {
+                Intent i = new Intent(getApplicationContext(), All_Folder_Screen.class);
+                i.putExtra("UserFirebaseID", UserID); // Send through the User's ID to the MainActivity
+                startActivity(i);
+            }
+        }, 500); // End delay
+    }
+
 }
