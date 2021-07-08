@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -25,6 +26,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            app:srcCompat="@drawable/name_header_1" />
+
         <EditText
             android:id="@+id/et_itemName"
             android:layout_width="match_parent"
@@ -32,6 +39,12 @@
             android:ems="10"
             android:hint="New item's name"
             android:inputType="textPersonName" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/quantity_header" />
 
         <EditText
             android:id="@+id/et_itemQty"
@@ -59,6 +72,12 @@
             android:hint="New item's date obtained"
             android:inputType="textPersonName" />
 
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/desc_header" />
+
         <EditText
             android:id="@+id/et_itemDesc"
             android:layout_width="match_parent"
@@ -68,8 +87,7 @@
             android:hint="New item's description"
             android:inputType="textPersonName" />
 
-        <Button
-            android:id="@+id/btn_push"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -93,12 +111,6 @@
                 android:layout_marginBottom="-2dp"
                 app:srcCompat="@drawable/confirm_one" />
         </RelativeLayout>
-        <Button
-            android:id="@+id/btn_back"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="BACK"
-            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
